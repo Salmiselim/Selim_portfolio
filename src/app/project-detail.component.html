@@ -1,0 +1,79 @@
+<section class="project-detail">
+  <div class="detail-header">
+    <a class="back-link" routerLink="/projects">Back to selection</a>
+  </div>
+
+  @if (project(); as project) {
+    <div class="card highlight detail-hero">
+      <div class="detail-hero-top">
+        <span class="section-tag">Mission Brief</span>
+        <span class="project-badge">{{ project.status }}</span>
+      </div>
+      @if (isMonopoly()) {
+        <div class="monopoly-decor" aria-hidden="true">
+          <span class="die die-one"></span>
+          <span class="die die-two"></span>
+          <span class="mono-coin"></span>
+          <span class="mono-dollar">$</span>
+        </div>
+      }
+      @if (isMagicArena()) {
+        <div class="magic-wand-row" aria-hidden="true">
+          <span class="wand"></span>
+          <span class="wand-spark spark-1"></span>
+          <span class="wand-spark spark-2"></span>
+          <span class="wand-spark spark-3"></span>
+        </div>
+      }
+      @if (isIceCream()) {
+        <div class="ice-decor" aria-hidden="true">
+          <span class="ice-cone">🍦</span>
+          <span class="ice-cube"></span>
+          <span class="ice-fruit">🍓</span>
+          <span class="ice-snowflake">❄</span>
+        </div>
+      }
+      <h1>{{ project.title }}</h1>
+      <p class="lead">{{ project.summary }}</p>
+      <div class="detail-meta">
+        <span>{{ project.role }}</span>
+        <span>{{ project.timeline }}</span>
+        <span>{{ project.genre }}</span>
+      </div>
+      <div class="stack">
+        @for (tech of project.stack; track tech) {
+          <span>{{ tech }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <article class="detail-panel">
+        <h2>Core Features</h2>
+        <ul class="detail-list">
+          @for (feature of project.features; track feature) {
+            <li>{{ feature }}</li>
+          }
+        </ul>
+      </article>
+      <article class="detail-panel">
+        <h2>Highlights</h2>
+        <ul class="detail-list">
+          @for (highlight of project.highlights; track highlight) {
+            <li>{{ highlight }}</li>
+          }
+        </ul>
+      </article>
+    </div>
+
+    <div class="detail-footer">
+      <a class="btn ghost" routerLink="/">Return to home</a>
+    </div>
+  } @else {
+    <div class="card">
+      <h1>Project not found</h1>
+      <p class="lead">We could not locate this mission. Choose another project.</p>
+      <a class="btn" routerLink="/projects">Back to projects</a>
+    </div>
+  }
+</section>

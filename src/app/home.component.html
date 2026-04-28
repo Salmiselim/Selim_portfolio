@@ -1,0 +1,434 @@
+<header class="hero">
+  <div class="hero-top">
+    <div class="brand">
+      <span class="pixel-dot" aria-hidden="true"></span>
+      <span class="brand-text">SELIM SALMI</span>
+    </div>
+    <nav class="hero-nav" aria-label="Primary">
+      <a routerLink="/projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="theme-toggle" type="button" (click)="theme.toggle()" [attr.aria-pressed]="theme.isLight()">
+      <span class="toggle-indicator" aria-hidden="true"></span>
+      <span class="toggle-label">{{ theme.isLight() ? 'Light' : 'Dark' }}</span>
+    </button>
+  </div>
+
+  <div class="hero-grid">
+    <div class="hero-main">
+      <p class="kicker">Full Stack Developer | Game Developer</p>
+      <h1>Immersive multiplayer worlds with reliable web systems.</h1>
+      <p class="lead">
+        Game developer specializing in Unity and XR, focused on immersive
+        multiplayer experiences and interactive systems. Strong foundation
+        in real-time networking, gameplay mechanics, and AI integration,
+        with additional experience in full-stack development. Software
+        engineering student at Esprit, graduating as an engineer next year.
+      </p>
+      <div class="hero-tags">
+        <span class="chip">Unity</span>
+        <span class="chip">XR/VR</span>
+        <span class="chip">Multiplayer</span>
+        <span class="chip">Blender</span>
+        <span class="chip">Gameplay Systems</span>
+        <span class="chip">AI Integration</span>
+        <span class="chip">Angular + Spring Boot</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn ghost" href="mailto:salmiselim2016@gmail.com">Contact</a>
+        <a class="btn ghost" routerLink="/projects">View Projects</a>
+        <a class="btn ghost" href="/resume.pdf" target="_blank" rel="noopener noreferrer">View Resume</a>
+      </div>
+    </div>
+
+    <aside class="hero-panel" aria-label="Mission Control">
+      <div class="panel-title">Mission Control</div>
+      <div class="panel-grid">
+        <div class="panel-item">
+          <span class="label">Location</span>
+          <span class="value">Tunisia</span>
+        </div>
+        <div class="panel-item">
+          <span class="label">Email</span>
+          <span class="value">salmiselim2016@gmail.com</span>
+        </div>
+        <div class="panel-item">
+          <span class="label">Phone</span>
+          <span class="value">+216 26 017 427</span>
+        </div>
+        <div class="panel-item">
+          <span class="label">GitHub</span>
+          <span class="value">github.com/Salmiselim</span>
+        </div>
+        <div class="panel-item">
+          <span class="label">LinkedIn</span>
+          <span class="value">linkedin.com/in/selim-salmi</span>
+        </div>
+        <div class="panel-item">
+          <span class="label">Status</span>
+          <span class="value">Software engineering student</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<main class="scroll-area" aria-label="Content">
+  <section class="section" id="focus">
+    <div class="section-title">
+      <span class="section-tag">Focus</span>
+      <h2>Game-first systems, production-grade delivery.</h2>
+    </div>
+    <div class="card-grid">
+      <article class="card">
+        <h3>Multiplayer Architecture</h3>
+        <p>
+          Real-time synchronization, matchmaking, and communication layers
+          for cooperative and competitive experiences.
+        </p>
+        <ul>
+          <li>State replication and latency handling</li>
+          <li>Voice chat with Vivox</li>
+          <li>Unity Gaming Services integration</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>XR/VR Interaction</h3>
+        <p>
+          Room-scale and gesture-based interaction systems with holographic
+          UI patterns for immersive gameplay.
+        </p>
+        <ul>
+          <li>Gesture-based controls</li>
+          <li>Spatial UI and HUD design</li>
+          <li>3D asset creation in Blender</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Full-Stack Systems</h3>
+        <p>
+          Production-ready web apps with real-time data, mapping, and clean
+          API design.
+        </p>
+        <ul>
+          <li>Angular + Spring Boot delivery</li>
+          <li>WebSockets for live updates</li>
+          <li>Relational and NoSQL databases</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="section-title">
+      <span class="section-tag">Game Projects</span>
+      <h2>Signature builds in XR and multiplayer.</h2>
+    </div>
+    <div class="card-grid">
+      <article class="card">
+        <div class="card-header">
+          <h3>MEGANOPOLY XR</h3>
+          <span class="card-label">Room-scale Multiplayer</span>
+        </div>
+        <p>
+          A Monopoly-inspired XR multiplayer experience with eight
+          mini-games, holographic UI, and spatial voice chat.
+        </p>
+        <div class="stack">
+          <span>Unity</span>
+          <span>C#</span>
+          <span>VR</span>
+          <span>Networking</span>
+          <span>Blender</span>
+        </div>
+        <ul>
+          <li>Real-time multiplayer system for up to 4 players</li>
+          <li>Gesture-based interactions and holographic HUD</li>
+          <li>3D asset creation and integration</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-header">
+          <h3>MAGIC ARENA XR</h3>
+          <span class="card-label">Spellcasting VR</span>
+        </div>
+        <p>
+          Wave-based combat with puzzle-driven progression and AI-assisted
+          voice-controlled spellcasting.
+        </p>
+        <div class="stack">
+          <span>Unity</span>
+          <span>VR</span>
+          <span>AI</span>
+          <span>Gameplay Systems</span>
+        </div>
+        <ul>
+          <li>Elemental abilities with unique gameplay effects</li>
+          <li>Puzzle levels with escalating difficulty</li>
+          <li>Voice command integration</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="card-header">
+          <h3>BAD ICE CREAM 3D</h3>
+          <span class="card-label">Arcade Multiplayer</span>
+        </div>
+        <p>
+          A 3D multiplayer arcade game with AI-driven enemy behavior and
+          real-time voice communication.
+        </p>
+        <div class="stack">
+          <span>Unity</span>
+          <span>UGS</span>
+          <span>Vivox</span>
+          <span>Multiplayer Sync</span>
+        </div>
+        <ul>
+          <li>Authentication and matchmaking with UGS</li>
+          <li>AI-driven fruit behaviors</li>
+          <li>Voice chat and multiplayer sync</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+<section class="section" id="web">
+  <div class="section-title">
+    <span class="section-tag">Web + Systems</span>
+    <h2>Full-stack products and real-time tools.</h2>
+  </div>
+  <div class="card-grid">
+    <article class="card">
+      <h3>SuiviVital</h3>
+      <p>
+        Multi-platform medical management platform with synchronized web,
+        desktop, and mobile experiences.
+      </p>
+      <div class="stack">
+        <span>Symfony</span>
+        <span>JavaFX</span>
+        <span>FlutterFlow</span>
+      </div>
+      <ul>
+        <li>Prescriptions, appointments, and claims</li>
+        <li>Cross-platform data synchronization</li>
+      </ul>
+    </article>
+    <article class="card">
+      <h3>Fund Delivery Management</h3>
+      <p>
+        Real-time delivery management with mapping, routing, and live
+        updates.
+      </p>
+      <div class="stack">
+        <span>Angular</span>
+        <span>Spring Boot</span>
+        <span>Leaflet</span>
+        <span>WebSockets</span>
+      </div>
+      <ul>
+        <li>Interactive map and route optimization</li>
+        <li>Live communication and sync</li>
+      </ul>
+    </article>
+    <article class="card">
+      <h3>IT Shop Management</h3>
+      <p>Complete shop management with inventory and operations tooling.</p>
+      <div class="stack">
+        <span>Angular</span>
+        <span>Node.js</span>
+        <span>MySQL</span>
+      </div>
+    </article>
+    <article class="card">
+      <h3>Animal Adoption Web App</h3>
+      <p>Donation and adoption workflows with a clean UI.</p>
+      <div class="stack">
+        <span>React</span>
+        <span>PHP</span>
+        <span>Oracle MySQL</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+  <section class="section" id="skills">
+    <div class="section-title">
+      <span class="section-tag">Skills</span>
+      <h2>Game-dev core with full-stack depth.</h2>
+    </div>
+    <div class="skills-stage">
+      <div class="skills-pixel-field" aria-hidden="true">
+        @for (pixel of skillPixels; track pixel.id) {
+          <span
+            class="skill-pixel"
+            [style.--pixel-x]="pixel.x + '%'"
+            [style.--pixel-y]="pixel.y + '%'"
+            [style.--pixel-size]="pixel.size + 'px'"
+            [style.--pixel-delay]="pixel.delay + 'ms'"
+            [style.--pixel-duration]="pixel.duration + 'ms'"
+            [style.--pixel-drift-x]="pixel.driftX + 'px'"
+            [style.--pixel-drift-y]="pixel.driftY + 'px'"
+            [style.--pixel-hue]="pixel.hue"
+          ></span>
+        }
+      </div>
+
+      <div class="skills-grid">
+        <div class="skills-card">
+          <h3>Game Development</h3>
+          <p>Unity (C#), XR/VR, Multiplayer Networking, Gameplay Systems.</p>
+          <p>AI Integration, Blender, Spatial UI.</p>
+        </div>
+        <div class="skills-card">
+          <h3>Programming</h3>
+          <p>C#, Java, Python, JavaScript, PHP.</p>
+        </div>
+        <div class="skills-card">
+          <h3>Web + Backend</h3>
+          <p>Angular, React, Spring Boot, Node.js.</p>
+          <p>MySQL, PostgreSQL, MongoDB.</p>
+        </div>
+        <div class="skills-card">
+          <h3>Tools and Services</h3>
+          <p>Git, Docker, Unity Gaming Services, Vivox, Blender.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="leadership">
+  <div class="section-title">
+    <span class="section-tag">Leadership</span>
+    <h2>Community and organization roles.</h2>
+  </div>
+
+  <div class="web-carousel">
+    <button class="carousel-btn prev" type="button" (click)="carouselPrev()">&#8592;</button>
+    <div class="carousel-track-wrap">
+      <div class="carousel-track" #carouselTrack>
+        <article class="card">
+          <h3>President, Leo Club Tunis Ares</h3>
+          <p>2025 - 2026</p>
+          <ul>
+            <li>Leading club operations and event execution</li>
+            <li>Coordinating teams and community initiatives</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Vice President, Leo Club Tunis Ares</h3>
+          <p>2024 - 2025</p>
+          <ul>
+            <li>Team coordination and event organization</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>HR Manager, Leo Club Tunis Ares</h3>
+          <p>2023 - 2024</p>
+          <ul>
+            <li>Internal communication and team coordination</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>HR Manager, Leo Club Tunis Aphrodite</h3>
+          <p>07/2023 - 12/2023</p>
+          <ul>
+            <li>HR operations and member support</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Event Team Member, Enactus ISET Rades</h3>
+          <p>12/2022 - 03/2023</p>
+          <ul>
+            <li>Event execution and collaboration</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+    <button class="carousel-btn next" type="button" (click)="carouselNext()">&#8594;</button>
+  </div>
+
+  <div class="carousel-dots">
+    @for (dot of leadershipCards; track $index) {
+      <span class="dot" [class.active]="$index === carouselIndex"></span>
+    }
+  </div>
+</section>
+  <section class="section" id="education">
+    <div class="section-title">
+      <span class="section-tag">Education</span>
+      <h2>Academic foundations and training.</h2>
+    </div>
+    <div class="card-grid">
+      <article class="card">
+        <h3>Software Engineering, Esprit</h3>
+        <p>Higher School of Engineering and Technologies | 2024 - Present</p>
+      </article>
+      <article class="card">
+        <h3>Bachelors Degree in Computer Science, ISET Rades</h3>
+        <p>2021 - 2024</p>
+      </article>
+      <article class="card">
+        <h3>High School Diploma, Economics and Management</h3>
+        <p>Lycee Ali Douagi La Marsa Saada | 2017 - 2021</p>
+      </article>
+    </div>
+    <div class="training">
+      <div class="training-card">
+        <h3>ReactJS Training, GoMyCode</h3>
+        <p>2022 - Manipulating ReactJS and its methods.</p>
+      </div>
+      <div class="training-card">
+        <h3>Web Development Training, GoMyCode</h3>
+        <p>2021 - HTML, CSS, JavaScript, DOM, GitHub fundamentals.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="section-title">
+      <span class="section-tag">Contact</span>
+      <h2>Let us build the next world.</h2>
+    </div>
+    <div class="contact-grid">
+      <article class="contact-panel">
+        <div>
+          <span class="label">Email</span>
+          <a href="mailto:salmiselim2016@gmail.com">salmiselim2016@gmail.com</a>
+        </div>
+        <div>
+          <span class="label">Phone</span>
+          <a href="tel:+21626017427">+216 26 017 427</a>
+        </div>
+        <div>
+          <span class="label">Location</span>
+          <span>Tunisia</span>
+        </div>
+      </article>
+      <article class="contact-panel">
+        <div>
+          <span class="label">LinkedIn</span>
+          <a href="https://linkedin.com/in/selim-salmi" target="_blank" rel="noopener">
+            linkedin.com/in/selim-salmi
+          </a>
+        </div>
+        <div>
+          <span class="label">GitHub</span>
+          <a href="https://github.com/Salmiselim" target="_blank" rel="noopener">
+            github.com/Salmiselim
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>Built for immersive multiplayer worlds.</span>
+    <span>Available for full-stack and game-dev roles.</span>
+  </footer>
+</main>

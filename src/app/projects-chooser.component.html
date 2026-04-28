@@ -1,0 +1,38 @@
+<section class="project-chooser">
+  <div class="chooser-header">
+    <a class="back-link" routerLink="/">Back to HQ</a>
+    <span class="section-tag">Choose your project</span>
+    <h1 class="chooser-title">Choose your project</h1>
+    <p class="lead">
+      Pick your mission like a character select screen. Each project below opens a full
+      mission brief with features, highlights, and stack details.
+    </p>
+  </div>
+
+  <div class="chooser-grid">
+    @for (project of projects; track project.id) {
+    <article class="card project-card" [attr.data-project-id]="project.id">
+      <div class="project-card-top">
+        <div>
+          <h2>{{ project.title }}</h2>
+          <p class="project-tagline">{{ project.tagline }}</p>
+        </div>
+        <span class="project-badge">{{ project.status }}</span>
+      </div>
+      <div class="project-meta">
+        <span>{{ project.role }}</span>
+        <span>{{ project.timeline }}</span>
+        <span>{{ project.genre }}</span>
+      </div>
+      <div class="stack">
+        @for (tech of project.stack; track tech) {
+        <span>{{ tech }}</span>
+        }
+      </div>
+      <div class="project-actions">
+        <a class="btn ghost" [routerLink]="['/projects', project.id]">Select Project</a>
+      </div>
+    </article>
+    }
+  </div>
+</section>
