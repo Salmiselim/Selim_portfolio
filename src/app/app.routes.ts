@@ -19,6 +19,7 @@ export const routes: Routes = [
 			import('./project-detail.component').then(
 				(mod) => mod.ProjectDetailComponent
 			),
+		data: { renderMode: 'client' }
 	},
 	{
 		path: '**',
