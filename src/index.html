@@ -1,13 +1,154 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>PortfolioSelim</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Selim Salmi | Full Stack Developer &amp; Game Developer</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0f14" />
+    <meta name="title" content="Selim Salmi | Full Stack Developer &amp; Game Developer" />
+    <meta
+      name="description"
+      content="Selim Salmi is a Tunisia-based Full Stack Developer and  focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications."
+    />
+    <meta
+      name="description"
+      lang="fr"
+      content="Selim Salmi est un développeur full stack et game developer basé en Tunisie, spécialisé en Unity, XR/VR, systèmes multijoueurs, Angular, Spring Boot, Java et applications web modernes."
+    />
+    <meta
+      name="keywords"
+      content="Selim Salmi, Salim Salmi,Selim Selmi, Full Stack Developer, Game Developer, Unity, XR, VR, Multiplayer, Angular, Spring Boot, Java, TypeScript, JavaScript, Node.js, PostgreSQL, MySQL, Docker, AI Integration, Tunisia, Esprit, Portfolio, Web Development, Software Engineer"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Selim Salmi" />
+    <meta name="language" content="English, French" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Selim Salmi" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/letter-s%20(2).png" />
+
+    <script>
+      (function () {
+        var origin = window.location.origin;
+        var pageUrl = origin + '/';
+        var previewImage = 'https://i.pinimg.com/webp/1200x/32/56/08/325608924ec64cec5fe900e836bbcea5.webp';
+
+        var canonical = document.createElement('link');
+        canonical.rel = 'canonical';
+        canonical.href = pageUrl;
+        document.head.appendChild(canonical);
+
+        var ogTags = {
+          'og:type': 'website',
+          'og:url': pageUrl,
+          'og:site_name': 'Selim Salmi',
+          'og:locale': 'en_US',
+          'og:title': 'Selim Salmi | Full Stack Developer & Game Developer',
+          'og:description':
+            'Selim Salmi is a Tunisia-based Full Stack Developer and Game Developer focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications.',
+          'og:image': previewImage,
+          'og:image:alt': 'Selim Salmi portfolio preview',
+          'og:image:width': '512',
+          'og:image:height': '512',
+          'og:image:type': 'image/webp',
+        };
+
+        var twitterTags = {
+          'twitter:card': 'summary_large_image',
+          'twitter:url': pageUrl,
+          'twitter:title': 'Selim Salmi | Full Stack Developer & Game Developer',
+          'twitter:description':
+            'Selim Salmi is a Tunisia-based Full Stack Developer and Game Developer focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications.',
+          'twitter:image': previewImage,
+          'twitter:image:alt': 'Selim Salmi portfolio preview',
+        };
+
+        Object.keys(ogTags).forEach(function (property) {
+          var meta = document.createElement('meta');
+          meta.setAttribute('property', property);
+          meta.setAttribute('content', ogTags[property]);
+          document.head.appendChild(meta);
+        });
+
+        Object.keys(twitterTags).forEach(function (property) {
+          var meta = document.createElement('meta');
+          meta.setAttribute('name', property);
+          meta.setAttribute('content', twitterTags[property]);
+          document.head.appendChild(meta);
+        });
+
+        var personScript = document.createElement('script');
+        personScript.type = 'application/ld+json';
+        personScript.text = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: 'Selim Salmi',
+          url: pageUrl,
+          image: previewImage,
+          jobTitle: 'Full Stack Developer & Game Developer',
+          description:
+            'Selim Salmi is a Tunisia-based Full Stack Developer and Game Developer focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications.',
+          email: 'salmiselim2016@gmail.com',
+          telephone: '+216 26 017 427',
+          address: {
+            '@type': 'PostalAddress',
+            addressCountry: 'TN',
+          },
+          sameAs: [
+            'https://github.com/Salmiselim',
+            'https://linkedin.com/in/selim-salmi',
+          ],
+          knowsAbout: [
+            'Unity',
+            'XR',
+            'VR',
+            'Multiplayer Systems',
+            'Angular',
+            'Spring Boot',
+            'Java',
+            'TypeScript',
+            'JavaScript',
+            'Node.js',
+            'Docker',
+            'AI Integration',
+            'Web Development',
+            'Software Architecture',
+          ],
+        });
+        document.head.appendChild(personScript);
+
+        var websiteScript = document.createElement('script');
+        websiteScript.type = 'application/ld+json';
+        websiteScript.text = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'Selim Salmi Portfolio',
+          url: pageUrl,
+          description:
+            'Portfolio website of Selim Salmi, Full Stack Developer and Game Developer specializing in modern web and interactive experiences.',
+          author: {
+            '@type': 'Person',
+            name: 'Selim Salmi',
+          },
+          inLanguage: ['en', 'fr'],
+        });
+        document.head.appendChild(websiteScript);
+
+        document.documentElement.classList.remove('dark');
+        try {
+          localStorage.setItem('theme', 'light');
+        } catch (error) {
+          // Ignore storage failures in private mode or restricted browsers.
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
 </html>
