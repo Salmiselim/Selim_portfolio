@@ -31,121 +31,84 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/letter-s%20(2).png" />
+    <link rel="canonical" href="https://selim-portfolio-2sip.vercel.app/" />
 
-    <script>
-      (function () {
-        var origin = window.location.origin;
-        var pageUrl = origin + '/';
-        var previewImage = 'https://i.pinimg.com/webp/1200x/32/56/08/325608924ec64cec5fe900e836bbcea5.webp';
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://selim-portfolio-2sip.vercel.app/" />
+    <meta property="og:site_name" content="Selim Salmi" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Selim Salmi | Full Stack Developer &amp; Game Developer" />
+    <meta
+      property="og:description"
+      content="Selim Salmi is a Tunisia-based Full Stack Developer and Game Developer focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications."
+    />
+    <meta property="og:image" content="https://selim-portfolio-2sip.vercel.app/preview.webp" />
+    <meta property="og:image:alt" content="Selim Salmi portfolio preview" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/webp" />
 
-        var canonical = document.createElement('link');
-        canonical.rel = 'canonical';
-        canonical.href = pageUrl;
-        document.head.appendChild(canonical);
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://selim-portfolio-2sip.vercel.app/" />
+    <meta name="twitter:title" content="Selim Salmi | Full Stack Developer &amp; Game Developer" />
+    <meta
+      name="twitter:description"
+      content="Selim Salmi is a Tunisia-based Full Stack Developer and Game Developer focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications."
+    />
+    <meta name="twitter:image" content="https://selim-portfolio-2sip.vercel.app/preview.webp" />
+    <meta name="twitter:image:alt" content="Selim Salmi portfolio preview" />
 
-        var ogTags = {
-          'og:type': 'website',
-          'og:url': pageUrl,
-          'og:site_name': 'Selim Salmi',
-          'og:locale': 'en_US',
-          'og:title': 'Selim Salmi | Full Stack Developer & Game Developer',
-          'og:description':
-            'Selim Salmi is a Tunisia-based Full Stack Developer and Game Developer focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications.',
-          'og:image': previewImage,
-          'og:image:alt': 'Selim Salmi portfolio preview',
-          'og:image:width': '512',
-          'og:image:height': '512',
-          'og:image:type': 'image/webp',
-        };
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Selim Salmi",
+        "url": "https://selim-portfolio-2sip.vercel.app/",
+        "image": "https://selim-portfolio-2sip.vercel.app/preview.webp",
+        "jobTitle": "Full Stack Developer & Game Developer",
+        "description": "Selim Salmi is a Tunisia-based Full Stack Developer and Game Developer focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications.",
+        "email": "salmiselim2016@gmail.com",
+        "telephone": "+216 26 017 427",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "TN"
+        },
+        "sameAs": [
+          "https://github.com/Salmiselim",
+          "https://linkedin.com/in/selim-salmi"
+        ],
+        "knowsAbout": [
+          "Unity",
+          "XR",
+          "VR",
+          "Multiplayer Systems",
+          "Angular",
+          "Spring Boot",
+          "Java",
+          "TypeScript",
+          "JavaScript",
+          "Node.js",
+          "Docker",
+          "AI Integration",
+          "Web Development",
+          "Software Architecture"
+        ]
+      }
+    </script>
 
-        var twitterTags = {
-          'twitter:card': 'summary_large_image',
-          'twitter:url': pageUrl,
-          'twitter:title': 'Selim Salmi | Full Stack Developer & Game Developer',
-          'twitter:description':
-            'Selim Salmi is a Tunisia-based Full Stack Developer and Game Developer focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications.',
-          'twitter:image': previewImage,
-          'twitter:image:alt': 'Selim Salmi portfolio preview',
-        };
-
-        Object.keys(ogTags).forEach(function (property) {
-          var meta = document.createElement('meta');
-          meta.setAttribute('property', property);
-          meta.setAttribute('content', ogTags[property]);
-          document.head.appendChild(meta);
-        });
-
-        Object.keys(twitterTags).forEach(function (property) {
-          var meta = document.createElement('meta');
-          meta.setAttribute('name', property);
-          meta.setAttribute('content', twitterTags[property]);
-          document.head.appendChild(meta);
-        });
-
-        var personScript = document.createElement('script');
-        personScript.type = 'application/ld+json';
-        personScript.text = JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'Person',
-          name: 'Selim Salmi',
-          url: pageUrl,
-          image: previewImage,
-          jobTitle: 'Full Stack Developer & Game Developer',
-          description:
-            'Selim Salmi is a Tunisia-based Full Stack Developer and Game Developer focused on Unity, XR/VR, multiplayer systems, Angular, Spring Boot, Java, and modern web applications.',
-          email: 'salmiselim2016@gmail.com',
-          telephone: '+216 26 017 427',
-          address: {
-            '@type': 'PostalAddress',
-            addressCountry: 'TN',
-          },
-          sameAs: [
-            'https://github.com/Salmiselim',
-            'https://linkedin.com/in/selim-salmi',
-          ],
-          knowsAbout: [
-            'Unity',
-            'XR',
-            'VR',
-            'Multiplayer Systems',
-            'Angular',
-            'Spring Boot',
-            'Java',
-            'TypeScript',
-            'JavaScript',
-            'Node.js',
-            'Docker',
-            'AI Integration',
-            'Web Development',
-            'Software Architecture',
-          ],
-        });
-        document.head.appendChild(personScript);
-
-        var websiteScript = document.createElement('script');
-        websiteScript.type = 'application/ld+json';
-        websiteScript.text = JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: 'Selim Salmi Portfolio',
-          url: pageUrl,
-          description:
-            'Portfolio website of Selim Salmi, Full Stack Developer and Game Developer specializing in modern web and interactive experiences.',
-          author: {
-            '@type': 'Person',
-            name: 'Selim Salmi',
-          },
-          inLanguage: ['en', 'fr'],
-        });
-        document.head.appendChild(websiteScript);
-
-        document.documentElement.classList.remove('dark');
-        try {
-          localStorage.setItem('theme', 'light');
-        } catch (error) {
-          // Ignore storage failures in private mode or restricted browsers.
-        }
-      })();
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Selim Salmi Portfolio",
+        "url": "https://selim-portfolio-2sip.vercel.app/",
+        "description": "Portfolio website of Selim Salmi, Full Stack Developer and Game Developer specializing in modern web and interactive experiences.",
+        "author": {
+          "@type": "Person",
+          "name": "Selim Salmi"
+        },
+        "inLanguage": ["en", "fr"]
+      }
     </script>
   </head>
   <body>
