@@ -2041,9 +2041,21 @@ a:hover { color: var(--accent); }
   gap: 48px;
 }
 
+.carousel-track-wrap {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.carousel-track {
+  display: flex;
+  will-change: transform;
+}
+
 .carousel-track .card {
-  flex: 0 0 calc(100% - 120px);
-  margin: 0 60px;
+  flex: 0 0 100%;
   opacity: 1 !important;
   transform: none !important;
+  box-sizing: border-box;
+  margin: 0;
 }
