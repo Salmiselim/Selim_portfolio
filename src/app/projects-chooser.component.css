@@ -84,6 +84,45 @@
   color: var(--accent);
 }
 
+.back-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  stroke-width: 2;
+}
+
+.back-link.btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  width: auto !important;
+  align-self: flex-start;
+}
+
+.back-link.btn.ghost:hover {
+  box-shadow: 0 8px 0 rgba(0,0,0,0.15);
+}
+
+/* Stronger hover + focus states to match other primary ghost buttons */
+.back-link {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.back-link.btn.ghost:hover,
+.back-link.btn.ghost:focus-visible {
+  background: var(--accent);
+  color: #071014;
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.back-link:focus-visible {
+  outline: 3px solid rgba(66,153,225,0.18);
+  outline-offset: 2px;
+}
+
 @media (max-width: 720px) {
   .project-card-top {
     flex-direction: column;
