@@ -20,6 +20,8 @@
     "@angular/platform-server": "^21.2.0",
     "@angular/router": "^21.2.0",
     "@angular/ssr": "^21.2.8",
+    "@ng-icons/core": "^33.2.2",
+    "@ng-icons/feather-icons": "^33.2.2",
     "express": "^5.1.0",
     "motion": "^12.38.0",
     "rxjs": "~7.8.0",

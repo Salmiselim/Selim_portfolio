@@ -9,6 +9,8 @@ import {
   PLATFORM_ID,
   signal,
 } from '@angular/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { featherLinkedin, featherMapPin, featherPhone, featherMail, featherGithub } from '@ng-icons/feather-icons';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './theme.service';
@@ -70,6 +72,7 @@ interface AmbientPixel {
     </div>
   `,
   imports: [RouterOutlet],
+  viewProviders: [provideIcons({ featherLinkedin, featherMapPin, featherPhone, featherMail, featherGithub })],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements AfterViewInit, OnDestroy {

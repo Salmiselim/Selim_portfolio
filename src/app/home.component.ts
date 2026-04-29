@@ -7,7 +7,10 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { NgIcon } from '@ng-icons/core';
 import { animate as _animate, inView, stagger, wrap } from 'motion';
 import { ThemeService } from './theme.service';
 
@@ -29,11 +32,12 @@ interface SkillPixel {
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  imports: [RouterLink],
+  imports: [RouterLink, NgIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   readonly theme = inject(ThemeService);
+  private platformId = inject(PLATFORM_ID);
 
   @ViewChild('carouselTrack') carouselTrackRef!: ElementRef<HTMLElement>;
 
@@ -61,7 +65,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private readonly stopFns: Array<() => void> = [];
 
   ngAfterViewInit(): void {
-    this.setupAnimations();
+    if (isPlatformBrowser(this.platformId)) {
+      this.setupAnimations();
+    }
   }
 
   ngOnDestroy(): void {
@@ -331,4 +337,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       this.stopFns.push(stop);
     }
   }
+
+  openResume(event: MouseEvent): void {
+  event.preventDefault();
+  window.open('/resume.pdf', '_blank');
+}
 }
