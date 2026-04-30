@@ -6,38 +6,99 @@
       </svg>
       <span class="back-text">Back to HQ</span>
     </a>
-    <span class="section-tag">Choose your project</span>
+    <span class="section-tag">Character Select</span>
     <h1 class="chooser-title">Choose your project</h1>
+    <p class="chooser-subtitle" aria-hidden="true">▶ SELECT YOUR CHARACTER ◀</p>
     <p class="lead">
       Pick your mission like a character select screen. Each project below opens a full
       mission brief with features, highlights, and stack details.
     </p>
+    <div class="chooser-credits" aria-hidden="true">
+      <span class="credits-label">CREDITS</span>
+      <span class="credits-value">∞</span>
+      <span class="credits-sep">·</span>
+      <span class="credits-label">PLAYER</span>
+      <span class="credits-value">1P</span>
+    </div>
   </div>
 
-  <div class="chooser-grid">
-    @for (project of projects; track project.id) {
-    <article class="card project-card" [attr.data-project-id]="project.id">
-      <div class="project-card-top">
-        <div>
-          <h2>{{ project.title }}</h2>
-          <p class="project-tagline">{{ project.tagline }}</p>
-        </div>
-        <span class="project-badge">{{ project.status }}</span>
-      </div>
-      <div class="project-meta">
-        <span>{{ project.role }}</span>
-        <span>{{ project.timeline }}</span>
-        <span>{{ project.genre }}</span>
-      </div>
-      <div class="stack">
-        @for (tech of project.stack; track tech) {
-        <span>{{ tech }}</span>
-        }
-      </div>
-      <div class="project-actions">
-        <a class="btn ghost" [routerLink]="['/projects', project.id]">Select Project</a>
-      </div>
-    </article>
-    }
+  <div class="chooser-stage">
+    <span class="stage-corner stage-tl" aria-hidden="true"></span>
+    <span class="stage-corner stage-tr" aria-hidden="true"></span>
+    <span class="stage-corner stage-bl" aria-hidden="true"></span>
+    <span class="stage-corner stage-br" aria-hidden="true"></span>
+    <span class="stage-arrow stage-arrow-left" aria-hidden="true">◀</span>
+    <span class="stage-arrow stage-arrow-right" aria-hidden="true">▶</span>
+
+    <div class="chooser-grid">
+      @for (project of projects; track project.id; let idx = $index) {
+        <article
+          class="card project-card"
+          [attr.data-project-id]="project.id"
+          [class.is-hovered]="hoveredIndex() === idx"
+          (mouseenter)="setHovered(idx)"
+          (mouseleave)="setHovered(null)"
+        >
+          <span class="card-corner tl" aria-hidden="true"></span>
+          <span class="card-corner tr" aria-hidden="true"></span>
+          <span class="card-corner bl" aria-hidden="true"></span>
+          <span class="card-corner br" aria-hidden="true"></span>
+
+          <div class="card-num-row" aria-hidden="true">
+            <span class="select-num">CHAR.{{ pad(idx + 1) }}</span>
+            <span class="select-genre">{{ statsByIndex[idx].genre }}</span>
+          </div>
+
+          <div class="ready-stamp" aria-hidden="true">READY</div>
+
+          <div class="project-card-top">
+            <div>
+              <h2>{{ project.title }}</h2>
+              <p class="project-tagline">{{ project.tagline }}</p>
+            </div>
+            <span class="project-badge">{{ project.status }}</span>
+          </div>
+
+          <div class="project-meta">
+            <span>{{ project.role }}</span>
+            <span>{{ project.timeline }}</span>
+            <span>{{ project.genre }}</span>
+          </div>
+
+          <div class="power-readout" aria-hidden="true">
+            <div class="power-row">
+              <span class="power-label">PWR</span>
+              <span class="power-bar"><span class="power-fill" [attr.data-pct]="statsByIndex[idx].power + '%'"></span></span>
+              <span class="power-num">{{ statsByIndex[idx].power }}</span>
+            </div>
+            <div class="power-row">
+              <span class="power-label">FUN</span>
+              <span class="power-bar"><span class="power-fill fun" [attr.data-pct]="statsByIndex[idx].fun + '%'"></span></span>
+              <span class="power-num">{{ statsByIndex[idx].fun }}</span>
+            </div>
+            <div class="power-row stars-row">
+              <span class="power-label">DIF</span>
+              <span class="power-stars">{{ stars(statsByIndex[idx].difficulty) }}</span>
+              <span class="power-num">{{ statsByIndex[idx].difficulty }}/5</span>
+            </div>
+          </div>
+
+          <div class="stack">
+            @for (tech of project.stack; track tech) {
+              <span>{{ tech }}</span>
+            }
+          </div>
+
+          <div class="project-actions">
+            <a class="btn ghost select-btn" [routerLink]="['/projects', project.id]">
+              <span class="select-arrow" aria-hidden="true">▶</span>
+              <span>Select Project</span>
+            </a>
+          </div>
+        </article>
+      }
+    </div>
   </div>
+
+  <p class="chooser-tip" aria-hidden="true">▼ HOVER TO PREVIEW · CLICK TO ENTER MISSION ▼</p>
 </section>

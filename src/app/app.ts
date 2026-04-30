@@ -9,7 +9,7 @@ import {
   PLATFORM_ID,
   signal,
 } from '@angular/core';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { provideIcons } from '@ng-icons/core';
 import { featherLinkedin, featherMapPin, featherPhone, featherMail, featherGithub } from '@ng-icons/feather-icons';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
@@ -28,6 +28,13 @@ interface AmbientPixel {
   readonly opacity: number;
 }
 
+const TRAIL_LENGTH = 6;
+const KONAMI_SEQUENCE = [
+  'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+  'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+  'b', 'a',
+];
+
 @Component({
   selector: 'app-root',
   template: `
@@ -35,7 +42,18 @@ interface AmbientPixel {
       class="app"
       [attr.data-theme]="theme.isLight() ? 'light' : 'dark'"
       [attr.data-project-theme]="theme.projectTheme()"
+      [class.super-mode]="superMode()"
     >
+      @if (showBoot()) {
+        <div class="boot-screen" [class.boot-done]="bootDone()" aria-hidden="true">
+          <div class="boot-stage">
+            <div class="boot-logo">SELIM SALMI</div>
+            <div class="boot-bar"></div>
+            <div class="boot-msg">▶ INITIALIZING SYSTEMS</div>
+          </div>
+        </div>
+      }
+
       <div class="pixel-cosmos" aria-hidden="true">
         @for (pixel of ambientPixels; track pixel.id) {
           <span
@@ -52,13 +70,25 @@ interface AmbientPixel {
           ></span>
         }
       </div>
+
+      <div class="scroll-xp" aria-hidden="true"></div>
+
       <div class="cursor-glow"></div>
       <div class="custom-cursor"></div>
       <div class="cursor-ring"></div>
+      @for (i of trailIndices; track i) {
+        <div class="cursor-trail" aria-hidden="true"></div>
+      }
+
+      <div class="click-burst-layer" aria-hidden="true"></div>
+
+      <div class="super-banner" [class.show]="superMode()" aria-hidden="true">★ SUPER MODE ★</div>
+
       <div class="app-shell">
         <div class="back-to-top-sentinel" aria-hidden="true"></div>
         <router-outlet></router-outlet>
       </div>
+
       @if (showBackToTop()) {
         <button
           class="back-to-top"
@@ -78,6 +108,10 @@ interface AmbientPixel {
 export class AppComponent implements AfterViewInit, OnDestroy {
   readonly theme = inject(ThemeService);
   readonly showBackToTop = signal(false);
+  readonly showBoot = signal(true);
+  readonly bootDone = signal(false);
+  readonly superMode = signal(false);
+  readonly trailIndices = Array.from({ length: TRAIL_LENGTH }, (_, i) => i);
   readonly ambientPixels: AmbientPixel[] = Array.from({ length: 48 }, (_, index) => {
     const seed = index + 1;
     const normalized = (value: number) => value - Math.floor(value);
@@ -96,18 +130,25 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       opacity: 0.28 + random(9) * 0.42,
     };
   });
+
   private platformId = inject(PLATFORM_ID);
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
   private scrollHandler: (() => void) | null = null;
+  private scrollProgressCleanup: (() => void) | null = null;
+  private clickHandler: ((e: MouseEvent) => void) | null = null;
+  private keyHandler: ((e: KeyboardEvent) => void) | null = null;
+  private magneticHandler: ((e: MouseEvent) => void) | null = null;
   private appShell: HTMLElement | null = null;
   private backToTopObserver: IntersectionObserver | null = null;
 
   private cursor!: HTMLElement;
   private cursorRing!: HTMLElement;
   private cursorGlow!: HTMLElement;
+  private trailEls: HTMLElement[] = [];
+  private burstLayer!: HTMLElement | null;
   private cards: HTMLElement[] = [];
-  private scrollRevealElements: HTMLElement[] = [];
+  private magneticEls: HTMLElement[] = [];
 
   private mouseX = 0;
   private mouseY = 0;
@@ -115,23 +156,50 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private ringY = 0;
   private glowX = 0;
   private glowY = 0;
+  private trailHistory: Array<{ x: number; y: number }> = [];
+
+  private konamiIndex = 0;
+  private superTimer: ReturnType<typeof setTimeout> | null = null;
+  private bootTimer: ReturnType<typeof setTimeout> | null = null;
+  private bootHideTimer: ReturnType<typeof setTimeout> | null = null;
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
+      this.initializeBoot();
       this.initializeCursor();
+      this.initializeTrail();
       this.initializeCardInteractions();
-      this.initializeScrollReveal();
       this.initializeBackToTop();
+      this.initializeScrollProgress();
+      this.initializeClickBurst();
+      this.initializeMagneticButtons();
+      this.initializeKonami();
       this.animate();
     }
   }
 
   ngOnDestroy(): void {
-    if (this.scrollHandler && isPlatformBrowser(this.platformId)) {
-      window.removeEventListener('scroll', this.scrollHandler);
-      this.appShell?.removeEventListener('scroll', this.scrollHandler);
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.scrollHandler) {
+        window.removeEventListener('scroll', this.scrollHandler);
+        this.appShell?.removeEventListener('scroll', this.scrollHandler);
+      }
+      if (this.clickHandler) window.removeEventListener('mousedown', this.clickHandler);
+      if (this.keyHandler) window.removeEventListener('keydown', this.keyHandler);
+      if (this.magneticHandler) window.removeEventListener('mousemove', this.magneticHandler);
+      this.scrollProgressCleanup?.();
     }
+    if (this.bootTimer) clearTimeout(this.bootTimer);
+    if (this.bootHideTimer) clearTimeout(this.bootHideTimer);
+    if (this.superTimer) clearTimeout(this.superTimer);
     this.backToTopObserver?.disconnect();
+  }
+
+  private initializeBoot(): void {
+    this.bootTimer = setTimeout(() => {
+      this.bootDone.set(true);
+      this.bootHideTimer = setTimeout(() => this.showBoot.set(false), 700);
+    }, 1700);
   }
 
   private initializeCursor(): void {
@@ -146,12 +214,24 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       this.renderer.addClass(appRoot, 'cursor-active');
     });
 
-    const interactiveElements = this.el.nativeElement.querySelectorAll(
-      'a, button, .card, .chip, .timeline-item'
-    );
-    interactiveElements.forEach((el: HTMLElement) => {
+    const interactiveSelectors = 'a, button, .card, .chip, .timeline-item, .stat-bar';
+    this.el.nativeElement.querySelectorAll(interactiveSelectors).forEach((el: HTMLElement) => {
       el.addEventListener('mouseenter', () => this.renderer.addClass(appRoot, 'cursor-interactive'));
       el.addEventListener('mouseleave', () => this.renderer.removeClass(appRoot, 'cursor-interactive'));
+    });
+  }
+
+  private initializeTrail(): void {
+    this.trailEls = Array.from(
+      (this.el.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('.cursor-trail'),
+    );
+    this.trailHistory = Array.from({ length: TRAIL_LENGTH }, () => ({ x: 0, y: 0 }));
+    this.trailEls.forEach((el, i) => {
+      const scale = 1 - i / (TRAIL_LENGTH + 2);
+      this.renderer.setStyle(el, 'transform', 'translate(-9999px, -9999px) scale(0)');
+      this.renderer.setStyle(el, 'opacity', `${0.55 - i * 0.08}`);
+      this.renderer.setStyle(el, 'transitionDuration', `${0.06 + i * 0.04}s`);
+      this.renderer.setStyle(el, '--trail-scale', scale.toString());
     });
   }
 
@@ -165,10 +245,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         const width = rect.width;
         const height = rect.height;
 
-        const rotateX = (y / height - 0.5) * -15; // Max rotation 7.5deg
-        const rotateY = (x / width - 0.5) * 15; // Max rotation 7.5deg
+        const rotateX = (y / height - 0.5) * -12;
+        const rotateY = (x / width - 0.5) * 12;
 
-        this.renderer.setStyle(card, 'transform', `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`);
+        this.renderer.setStyle(card, 'transform', `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(4px)`);
         this.renderer.setStyle(card, '--glow-x', `${x}px`);
         this.renderer.setStyle(card, '--glow-y', `${y}px`);
       });
@@ -179,24 +259,114 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private initializeScrollReveal(): void {
-    this.scrollRevealElements = Array.from(this.el.nativeElement.querySelectorAll('[data-scroll-reveal]'));
+  private initializeClickBurst(): void {
+    this.burstLayer = this.el.nativeElement.querySelector('.click-burst-layer');
+    if (!this.burstLayer) return;
 
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          this.renderer.addClass(entry.target, 'is-visible');
-          // Stagger children if any
-          const children = (entry.target as HTMLElement).children;
-          for (let i = 0; i < children.length; i++) {
-            this.renderer.setStyle(children[i], '--stagger-index', i.toString());
-          }
-          obs.unobserve(entry.target);
+    this.clickHandler = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      // Skip if it's the boot screen
+      if (target?.closest('.boot-screen')) return;
+      this.spawnBurst(e.clientX, e.clientY);
+    };
+    window.addEventListener('mousedown', this.clickHandler, { passive: true });
+  }
+
+  private spawnBurst(x: number, y: number): void {
+    if (!this.burstLayer) return;
+    const colors = ['#58f8c0', '#7cc9ff', '#ffb861', '#c084fc'];
+    const burst = this.renderer.createElement('div') as HTMLElement;
+    this.renderer.addClass(burst, 'click-burst');
+    this.renderer.setStyle(burst, 'left', `${x}px`);
+    this.renderer.setStyle(burst, 'top', `${y}px`);
+    this.renderer.setStyle(burst, 'position', 'fixed');
+
+    const count = this.superMode() ? 18 : 12;
+    for (let i = 0; i < count; i++) {
+      const pixel = this.renderer.createElement('div') as HTMLElement;
+      this.renderer.addClass(pixel, 'burst-pixel');
+      const angle = (Math.PI * 2 * i) / count + Math.random() * 0.4;
+      const distance = 40 + Math.random() * 50;
+      const bx = Math.cos(angle) * distance;
+      const by = Math.sin(angle) * distance;
+      const color = colors[i % colors.length];
+      this.renderer.setStyle(pixel, '--bx', `${bx}px`);
+      this.renderer.setStyle(pixel, '--by', `${by}px`);
+      this.renderer.setStyle(pixel, 'background', color);
+      this.renderer.setStyle(pixel, 'color', color);
+      this.renderer.setStyle(pixel, 'animationDelay', `${Math.random() * 0.05}s`);
+      this.renderer.appendChild(burst, pixel);
+    }
+
+    this.renderer.appendChild(this.burstLayer, burst);
+    setTimeout(() => burst.parentNode?.removeChild(burst), 800);
+  }
+
+  private initializeMagneticButtons(): void {
+    // Refresh list of magnetic targets
+    const refresh = () => {
+      this.magneticEls = Array.from(
+        (this.el.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('.btn, .theme-toggle, .carousel-btn, .back-to-top'),
+      );
+    };
+    refresh();
+
+    // Re-discover after layout settles (e.g., back-to-top mounts later)
+    setTimeout(refresh, 1000);
+    setTimeout(refresh, 3000);
+
+    this.magneticHandler = (e: MouseEvent) => {
+      const radius = 90;
+      const strength = 0.35;
+      this.magneticEls.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        const dist = Math.hypot(dx, dy);
+        if (dist < radius) {
+          const factor = (1 - dist / radius) * strength;
+          this.renderer.setStyle(el, '--mag-x', `${dx * factor}px`);
+          this.renderer.setStyle(el, '--mag-y', `${dy * factor}px`);
+        } else {
+          this.renderer.setStyle(el, '--mag-x', '0px');
+          this.renderer.setStyle(el, '--mag-y', '0px');
         }
       });
-    }, { threshold: 0.1 });
+    };
+    window.addEventListener('mousemove', this.magneticHandler, { passive: true });
+  }
 
-    this.scrollRevealElements.forEach((el) => observer.observe(el));
+  private initializeKonami(): void {
+    this.keyHandler = (e: KeyboardEvent) => {
+      const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      const expected = KONAMI_SEQUENCE[this.konamiIndex];
+      if (key === expected) {
+        this.konamiIndex++;
+        if (this.konamiIndex === KONAMI_SEQUENCE.length) {
+          this.activateSuperMode();
+          this.konamiIndex = 0;
+        }
+      } else {
+        this.konamiIndex = key === KONAMI_SEQUENCE[0] ? 1 : 0;
+      }
+    };
+    window.addEventListener('keydown', this.keyHandler);
+  }
+
+  private activateSuperMode(): void {
+    this.superMode.set(true);
+    // Big burst from center
+    if (isPlatformBrowser(this.platformId)) {
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      for (let i = 0; i < 4; i++) {
+        setTimeout(() => this.spawnBurst(cx + (Math.random() - 0.5) * 200, cy + (Math.random() - 0.5) * 200), i * 80);
+      }
+    }
+    if (this.superTimer) clearTimeout(this.superTimer);
+    this.superTimer = setTimeout(() => this.superMode.set(false), 6000);
   }
 
   private animate(): void {
@@ -216,6 +386,18 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     if (this.cursorGlow) {
       this.renderer.setStyle(this.cursorGlow, 'transform', `translate(${this.glowX}px, ${this.glowY}px)`);
     }
+
+    // Update trail history (newest first)
+    this.trailHistory.unshift({ x: this.mouseX, y: this.mouseY });
+    if (this.trailHistory.length > TRAIL_LENGTH) this.trailHistory.length = TRAIL_LENGTH;
+
+    this.trailEls.forEach((el, i) => {
+      const lag = i * 2;
+      const point = this.trailHistory[Math.min(lag, this.trailHistory.length - 1)];
+      if (!point) return;
+      const scale = 1 - i / (TRAIL_LENGTH + 2);
+      this.renderer.setStyle(el, 'transform', `translate(${point.x}px, ${point.y}px) scale(${scale})`);
+    });
 
     requestAnimationFrame(() => this.animate());
   }
@@ -256,6 +438,20 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     );
 
     this.backToTopObserver.observe(sentinel);
+  }
+
+  private initializeScrollProgress(): void {
+    const bar = this.el.nativeElement.querySelector('.scroll-xp') as HTMLElement | null;
+    if (!bar) return;
+    const update = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total <= 0) return;
+      const pct = Math.min(100, (window.scrollY / total) * 100);
+      this.renderer.setStyle(bar, 'width', `${pct}%`);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    this.scrollProgressCleanup = () => window.removeEventListener('scroll', update);
   }
 
   scrollToTop(): void {

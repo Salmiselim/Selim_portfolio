@@ -1,3 +1,11 @@
+<div class="achievement" [class.show]="!!achievement()" aria-live="polite" aria-hidden="true">
+  <div class="achievement-icon">★</div>
+  <div class="achievement-text">
+    <span class="achievement-tag">{{ achievement()?.tag || '' }}</span>
+    <span class="achievement-name">{{ achievement()?.name || '' }}</span>
+  </div>
+</div>
+
 <header class="hero">
   <div class="hero-top">
     <div class="brand">
@@ -39,11 +47,13 @@
       <div class="hero-actions">
         <a class="btn ghost" href="mailto:salmiselim2016@gmail.com">Contact</a>
         <a class="btn ghost" routerLink="/projects">View Projects</a>
-<a class="btn ghost" href="/resume.pdf" target="_blank" rel="noopener" aria-label="View Resume">View Resume</a>      </div>
+        <a class="btn ghost" href="/resume.pdf" target="_blank" rel="noopener" aria-label="View Resume">View Resume</a>
+      </div>
+      <p class="press-start" aria-hidden="true">▶ PRESS START</p>
     </div>
 
     <aside class="hero-panel" aria-label="Mission Control">
-      <div class="panel-title">Mission Control</div>
+      <div class="panel-title">Mission Control <span class="panel-online" aria-hidden="true"></span></div>
       <div class="panel-grid">
         <div class="panel-item">
           <span class="label">Location</span>
@@ -131,6 +141,7 @@
           <h3>MEGANOPOLY XR</h3>
           <span class="card-label">Room-scale Multiplayer</span>
         </div>
+        <div class="card-stage" aria-hidden="true">▶ STAGE 01 — BOSS LEVEL</div>
         <p>
           A Monopoly-inspired XR multiplayer experience with eight
           mini-games, holographic UI, and spatial voice chat.
@@ -154,6 +165,7 @@
           <h3>MAGIC ARENA XR</h3>
           <span class="card-label">Spellcasting VR</span>
         </div>
+        <div class="card-stage" aria-hidden="true">▶ STAGE 02 — ARCANE TRIAL</div>
         <p>
           Wave-based combat with puzzle-driven progression and AI-assisted
           voice-controlled spellcasting.
@@ -176,6 +188,7 @@
           <h3>BAD ICE CREAM 3D</h3>
           <span class="card-label">Arcade Multiplayer</span>
         </div>
+        <div class="card-stage" aria-hidden="true">▶ STAGE 03 — FROZEN RUSH</div>
         <p>
           A 3D multiplayer arcade game with AI-driven enemy behavior and
           real-time voice communication.
@@ -315,21 +328,110 @@
       <div class="skills-grid">
         <div class="skills-card">
           <h3>Game Development</h3>
-          <p>Unity (C#), XR/VR, Multiplayer Networking, Gameplay Systems.</p>
-          <p>AI Integration, Blender, Spatial UI.</p>
+          <div class="stat-bar">
+            <span class="stat-label">Unity / C#</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="92"></div></div>
+            <span class="stat-num">92</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">XR / VR</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="88"></div></div>
+            <span class="stat-num">88</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">Multiplayer</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="85"></div></div>
+            <span class="stat-num">85</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">AI Systems</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="78"></div></div>
+            <span class="stat-num">78</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">Blender</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="74"></div></div>
+            <span class="stat-num">74</span>
+          </div>
         </div>
         <div class="skills-card">
           <h3>Programming</h3>
-          <p>C#, Java, Python, JavaScript, PHP.</p>
+          <div class="stat-bar">
+            <span class="stat-label">C#</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="91"></div></div>
+            <span class="stat-num">91</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">JavaScript</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="82"></div></div>
+            <span class="stat-num">82</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">Java</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="76"></div></div>
+            <span class="stat-num">76</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">Python</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="70"></div></div>
+            <span class="stat-num">70</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">PHP</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="65"></div></div>
+            <span class="stat-num">65</span>
+          </div>
         </div>
         <div class="skills-card">
           <h3>Web + Backend</h3>
-          <p>Angular, React, Spring Boot, Node.js.</p>
-          <p>MySQL, PostgreSQL, MongoDB.</p>
+          <div class="stat-bar">
+            <span class="stat-label">Angular</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="84"></div></div>
+            <span class="stat-num">84</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">Spring Boot</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="78"></div></div>
+            <span class="stat-num">78</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">React</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="72"></div></div>
+            <span class="stat-num">72</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">Node.js</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="70"></div></div>
+            <span class="stat-num">70</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">Databases</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="76"></div></div>
+            <span class="stat-num">76</span>
+          </div>
         </div>
         <div class="skills-card">
-          <h3>Tools and Services</h3>
-          <p>Git, Docker, Unity Gaming Services, Vivox, Blender.</p>
+          <h3>Tools + Services</h3>
+          <div class="stat-bar">
+            <span class="stat-label">Git / Docker</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="85"></div></div>
+            <span class="stat-num">85</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">UGS / Vivox</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="80"></div></div>
+            <span class="stat-num">80</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">Blender</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="74"></div></div>
+            <span class="stat-num">74</span>
+          </div>
+          <div class="stat-bar">
+            <span class="stat-label">WebSockets</span>
+            <div class="stat-track"><div class="stat-fill" data-pct="78"></div></div>
+            <span class="stat-num">78</span>
+          </div>
         </div>
       </div>
     </div>
@@ -428,6 +530,7 @@
       <span class="section-tag">Contact</span>
       <h2>Let us build the next world.</h2>
     </div>
+    <p class="arcade-ready" aria-hidden="true">— PLAYER 1 READY —</p>
     <div class="contact-grid">
       <article class="contact-panel">
         <div>
@@ -456,8 +559,23 @@
     </div>
   </section>
 
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>UNITY · C# · XR / VR · MULTIPLAYER · BLENDER · ANGULAR · SPRING BOOT · REACT · NODE · DOCKER · GAME-FIRST DELIVERY</span>
+      <span>INSERT COIN TO CONTINUE · BUILT FOR IMMERSIVE WORLDS · PLAYER 1 ONLINE · LEVEL UP YOUR PRODUCT</span>
+      <span>UNITY · C# · XR / VR · MULTIPLAYER · BLENDER · ANGULAR · SPRING BOOT · REACT · NODE · DOCKER · GAME-FIRST DELIVERY</span>
+    </div>
+  </div>
+
   <footer class="footer">
-    <span>Built for immersive multiplayer worlds.</span>
+    <div class="footer-score">
+      <span class="footer-score-label">SCORE</span>
+      <span>9 999 999</span>
+    </div>
     <span>Available for full-stack and game-dev roles.</span>
+    <div class="footer-score">
+      <span class="footer-score-label">HI-SCORE</span>
+      <span>∞</span>
+    </div>
   </footer>
 </main>

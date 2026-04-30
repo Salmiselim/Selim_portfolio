@@ -6,6 +6,7 @@ import {
   inject,
   OnDestroy,
   ViewChild,
+  signal,
 } from '@angular/core';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -13,6 +14,12 @@ import { RouterLink } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { animate as _animate, inView, stagger, wrap } from 'motion';
 import { ThemeService } from './theme.service';
+
+interface Achievement {
+  readonly tag: string;
+  readonly name: string;
+  readonly key: number;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const animate = _animate as (...args: any[]) => any;
@@ -43,6 +50,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   carouselIndex = 0;
   readonly leadershipCards = [0, 1, 2, 3, 4]; // one entry per card
+  readonly achievement = signal<Achievement | null>(null);
+  private achievementCounter = 0;
+  private achievementTimer: ReturnType<typeof setTimeout> | null = null;
 
   readonly skillPixels: SkillPixel[] = Array.from({ length: 12 }, (_, index) => {
     const seed = index + 1;
@@ -67,11 +77,74 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.setupAnimations();
+      this.setupStatBars();
+      this.setupAchievements();
     }
   }
 
   ngOnDestroy(): void {
     this.stopFns.forEach((stop) => stop());
+    if (this.achievementTimer) clearTimeout(this.achievementTimer);
+  }
+
+  private setupStatBars(): void {
+    const stage = document.querySelector<HTMLElement>('.skills-stage');
+    if (!stage) return;
+    const fills = Array.from(stage.querySelectorAll<HTMLElement>('.stat-fill'));
+    if (fills.length === 0) return;
+
+    const stop = inView(
+      stage,
+      () => {
+        fills.forEach((fill, i) => {
+          const pct = fill.dataset['pct'] ?? '0';
+          fill.style.transitionDelay = `${0.2 + i * 0.04}s`;
+          fill.style.width = `${pct}%`;
+        });
+        stop();
+      },
+      { amount: 0.05 },
+    );
+    this.stopFns.push(stop);
+  }
+
+  private setupAchievements(): void {
+    const items: Array<{ id: string; tag: string; name: string }> = [
+      { id: 'focus', tag: 'AREA UNLOCKED', name: 'Focus Zone' },
+      { id: 'projects', tag: 'BOSS APPROACHING', name: 'Game Projects' },
+      { id: 'experience', tag: 'XP GAINED', name: 'Experience Logs' },
+      { id: 'web', tag: 'AREA UNLOCKED', name: 'Web + Systems' },
+      { id: 'skills', tag: 'STATS REVEALED', name: 'Skill Tree' },
+      { id: 'leadership', tag: 'TROPHY EARNED', name: 'Leadership Roles' },
+      { id: 'education', tag: 'ACHIEVEMENT', name: 'Academic Path' },
+      { id: 'contact', tag: 'PLAYER 1 READY', name: 'Final Stage' },
+    ];
+
+    items.forEach((item) => {
+      const section = document.getElementById(item.id);
+      if (!section) return;
+      const stop = inView(
+        section,
+        () => {
+          this.showAchievement(item.tag, item.name);
+          stop();
+        },
+        { amount: 0.25 },
+      );
+      this.stopFns.push(stop);
+    });
+  }
+
+  private showAchievement(tag: string, name: string): void {
+    this.achievementCounter++;
+    const key = this.achievementCounter;
+    this.achievement.set({ tag, name, key });
+    if (this.achievementTimer) clearTimeout(this.achievementTimer);
+    this.achievementTimer = setTimeout(() => {
+      if (this.achievement()?.key === key) {
+        this.achievement.set(null);
+      }
+    }, 3200);
   }
 
   carouselNext(): void {
