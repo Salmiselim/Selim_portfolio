@@ -57,7 +57,7 @@
   --bg: #0a100d;
   --panel: #141f19;
   --panel-2: #1a2b22;
-  --text: #f5f0e1;
+  --text: #2a2420;
   --muted: #c4b99a;
   --accent: #d94c3d;
   --accent-2: #f1c44d;
@@ -267,7 +267,7 @@
 
 .app[data-project-theme='monopoly'] .btn.ghost {
   background: rgba(26, 43, 34, 0.7);
-  color: var(--text);
+  color: #f5f0e1;
   border-color: rgba(241, 196, 77, 0.4);
   box-shadow: none;
 }
