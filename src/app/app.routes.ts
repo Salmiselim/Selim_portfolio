@@ -22,6 +22,12 @@ export const routes: Routes = [
 		data: { renderMode: 'client' }
 	},
 	{
+		path: 'arcade',
+		loadComponent: () =>
+			import('./arcade.component').then((mod) => mod.ArcadeComponent),
+		data: { renderMode: 'client' }
+	},
+	{
 		path: '**',
 		redirectTo: '',
 	},

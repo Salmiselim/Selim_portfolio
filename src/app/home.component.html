@@ -6,14 +6,23 @@
   </div>
 </div>
 
-<header class="hero">
+<header class="hero hero-v2">
+  <div class="hero-frame" aria-hidden="true">
+    <span class="hero-corner tl"></span>
+    <span class="hero-corner tr"></span>
+    <span class="hero-corner bl"></span>
+    <span class="hero-corner br"></span>
+  </div>
+
   <div class="hero-top">
     <div class="brand">
       <span class="pixel-dot" aria-hidden="true"></span>
       <span class="brand-text">SELIM SALMI</span>
+      <span class="brand-tag" aria-hidden="true">v2.0</span>
     </div>
     <nav class="hero-nav" aria-label="Primary">
       <a routerLink="/projects">Projects</a>
+      <a routerLink="/arcade" class="nav-arcade">Arcade <span class="nav-new" aria-hidden="true">NEW</span></a>
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
@@ -26,8 +35,13 @@
 
   <div class="hero-grid">
     <div class="hero-main">
+      <div class="hero-status" aria-hidden="true">
+        <span class="status-pulse"></span>
+        <span class="status-label">SYSTEM ONLINE — AVAILABLE FOR HIRE</span>
+      </div>
+
       <p class="kicker">Full Stack Developer | Game Developer</p>
-      <h1>Immersive multiplayer worlds with reliable web systems.</h1>
+      <h1>Immersive multiplayer worlds with <span class="hero-grad">reliable web systems</span>.</h1>
       <p class="lead">
         Game developer specializing in Unity and XR, focused on immersive
         multiplayer experiences and interactive systems. Strong foundation
@@ -45,23 +59,49 @@
         <span class="chip">Angular + Spring Boot</span>
       </div>
       <div class="hero-actions">
-        <a class="btn ghost" href="mailto:salmiselim2016@gmail.com">Contact</a>
+        <a class="btn primary" href="mailto:salmiselim2016@gmail.com">▶ Start Conversation</a>
         <a class="btn ghost" routerLink="/projects">View Projects</a>
+        <a class="btn ghost arcade-cta" routerLink="/arcade">▶ Play Arcade</a>
         <a class="btn ghost" href="/resume.pdf" target="_blank" rel="noopener" aria-label="View Resume">View Resume</a>
       </div>
       <p class="press-start" aria-hidden="true">▶ PRESS START</p>
     </div>
 
-    <aside class="hero-panel" aria-label="Mission Control">
-      <div class="panel-title">Mission Control <span class="panel-online" aria-hidden="true"></span></div>
+    <aside class="hero-panel player-card" aria-label="Player Profile">
+      <div class="panel-title">Player Profile <span class="panel-online" aria-hidden="true"></span></div>
+
+      <div class="player-head">
+        <div class="player-avatar" aria-hidden="true">
+          <img src="/letter-s%20(2).png" alt="" />
+          <span class="avatar-frame"></span>
+        </div>
+        <div class="player-meta">
+          <span class="player-name">SELIM_SALMI</span>
+          <span class="player-class">CLASS: GAME-DEV / FULL-STACK</span>
+          <span class="player-rank"><b>RANK</b> A+ <span class="rank-pip">★★★★☆</span></span>
+        </div>
+      </div>
+
+      <div class="player-xp">
+        <div class="xp-row">
+          <span class="xp-label">LV. 24 — XP</span>
+          <span class="xp-num">8 420 / 10 000</span>
+        </div>
+        <div class="xp-track"><div class="xp-fill"></div></div>
+      </div>
+
       <div class="panel-grid">
         <div class="panel-item">
           <span class="label">Location</span>
           <span class="value">Tunisia</span>
         </div>
         <div class="panel-item">
+          <span class="label">Status</span>
+          <span class="value">Engineering student</span>
+        </div>
+        <div class="panel-item">
           <span class="label">Email</span>
-          <span class="value">salmiselim2016@gmail.com</span>
+          <span class="value">salmiselim2016&#64;gmail.com</span>
         </div>
         <div class="panel-item">
           <span class="label">Phone</span>
@@ -75,12 +115,35 @@
           <span class="label">LinkedIn</span>
           <span class="value">linkedin.com/in/selim-salmi</span>
         </div>
-        <div class="panel-item">
-          <span class="label">Status</span>
-          <span class="value">Software engineering student</span>
-        </div>
       </div>
     </aside>
+  </div>
+
+  <div class="hero-hud" aria-label="Quick Stats">
+    <div class="hud-cell">
+      <span class="hud-num" data-num="3">3+</span>
+      <span class="hud-label">Years Building</span>
+    </div>
+    <div class="hud-divider" aria-hidden="true"></div>
+    <div class="hud-cell">
+      <span class="hud-num">12</span>
+      <span class="hud-label">Shipped Projects</span>
+    </div>
+    <div class="hud-divider" aria-hidden="true"></div>
+    <div class="hud-cell">
+      <span class="hud-num">8</span>
+      <span class="hud-label">XR Mini-Games</span>
+    </div>
+    <div class="hud-divider" aria-hidden="true"></div>
+    <div class="hud-cell">
+      <span class="hud-num">3</span>
+      <span class="hud-label">Internships</span>
+    </div>
+    <div class="hud-divider" aria-hidden="true"></div>
+    <div class="hud-cell">
+      <span class="hud-num">4</span>
+      <span class="hud-label">Leadership Roles</span>
+    </div>
   </div>
 </header>
 
@@ -135,8 +198,17 @@
       <span class="section-tag">Game Projects</span>
       <h2>Signature builds in XR and multiplayer.</h2>
     </div>
-    <div class="card-grid">
-      <article class="card">
+    <div class="card-grid game-grid">
+      <article class="card game-card">
+        <span class="card-bracket tl" aria-hidden="true"></span>
+        <span class="card-bracket tr" aria-hidden="true"></span>
+        <span class="card-bracket bl" aria-hidden="true"></span>
+        <span class="card-bracket br" aria-hidden="true"></span>
+        <div class="card-screen card-screen--monopoly" aria-hidden="true">
+          <span class="screen-tag">CABINET 01</span>
+          <span class="screen-title">MEGANOPOLY</span>
+          <span class="screen-sub">XR · MULTIPLAYER</span>
+        </div>
         <div class="card-header">
           <h3>MEGANOPOLY XR</h3>
           <span class="card-label">Room-scale Multiplayer</span>
@@ -160,7 +232,16 @@
         </ul>
       </article>
 
-      <article class="card">
+      <article class="card game-card">
+        <span class="card-bracket tl" aria-hidden="true"></span>
+        <span class="card-bracket tr" aria-hidden="true"></span>
+        <span class="card-bracket bl" aria-hidden="true"></span>
+        <span class="card-bracket br" aria-hidden="true"></span>
+        <div class="card-screen card-screen--magic" aria-hidden="true">
+          <span class="screen-tag">CABINET 02</span>
+          <span class="screen-title">MAGIC ARENA</span>
+          <span class="screen-sub">VR · SPELLCASTING</span>
+        </div>
         <div class="card-header">
           <h3>MAGIC ARENA XR</h3>
           <span class="card-label">Spellcasting VR</span>
@@ -183,7 +264,16 @@
         </ul>
       </article>
 
-      <article class="card">
+      <article class="card game-card">
+        <span class="card-bracket tl" aria-hidden="true"></span>
+        <span class="card-bracket tr" aria-hidden="true"></span>
+        <span class="card-bracket bl" aria-hidden="true"></span>
+        <span class="card-bracket br" aria-hidden="true"></span>
+        <div class="card-screen card-screen--ice" aria-hidden="true">
+          <span class="screen-tag">CABINET 03</span>
+          <span class="screen-title">BAD ICE CREAM</span>
+          <span class="screen-sub">ARCADE · MULTIPLAYER</span>
+        </div>
         <div class="card-header">
           <h3>BAD ICE CREAM 3D</h3>
           <span class="card-label">Arcade Multiplayer</span>

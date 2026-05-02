@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx --no-install ng build --configuration development)"
+      "Bash(npx --no-install ng build --configuration development)",
+      "Bash(npx ng *)",
+      "Bash(grep -qE \"compiled|Compiled|ready|Ready|Local:\" \"C:\\\\\\\\Users\\\\\\\\Selim-PC\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\c--Users-Selim-PC-portfolio-selim\\\\\\\\f4fab990-80fb-4516-b38a-da3b0ae9d69d\\\\\\\\tasks\\\\\\\\bazx2860x.output\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code} | %{size_download} bytes\\\\n\" http://localhost:4321/)",
+      "Bash(grep -qE \"Local:|Listening\" \"C:\\\\\\\\Users\\\\\\\\Selim-PC\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\claude\\\\\\\\c--Users-Selim-PC-portfolio-selim\\\\\\\\f4fab990-80fb-4516-b38a-da3b0ae9d69d\\\\\\\\tasks\\\\\\\\bj493tvhq.output\")",
+      "Bash(curl -s -o /dev/null -w \"/         HTTP %{http_code}\\\\n\" http://localhost:4322/)",
+      "Bash(curl -s -o /dev/null -w \"/projects HTTP %{http_code}\\\\n\" http://localhost:4322/projects)",
+      "Bash(curl -s -o /dev/null -w \"/arcade   HTTP %{http_code}\\\\n\" http://localhost:4322/arcade)",
+      "Bash(curl -s http://localhost:4322/arcade)",
+      "Bash(grep -oE 'PIXEL.{0,40}|game-canvas|cabinet-marquee|Hi-Score')"
     ]
   }
 }
