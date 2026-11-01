@@ -1,0 +1,275 @@
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="status">
+        <span class="pulse" aria-hidden="true"></span>
+        Available for {{ profile.seeking.short }}
+      </p>
+
+      <h1 id="hero-title" class="display headline">
+        <span class="sr-only">{{ profile.name }}, full stack and game developer. </span>
+        <span class="line" aria-hidden="true"><span style="--d: 0">Games &amp;</span></span>
+        <span class="line" aria-hidden="true"><span class="outline-text" style="--d: 1">real&#8209;time</span></span>
+        <span class="line" aria-hidden="true"><span style="--d: 2">systems<em>.</em></span></span>
+      </h1>
+
+      <p class="intro">
+        I’m <strong>{{ profile.name }}</strong>, a full stack &amp; game developer finishing my engineering degree at ESPRIT.
+        {{ profile.tagline }}
+      </p>
+
+      <div class="ctas">
+        <a class="btn btn-primary" routerLink="/" fragment="work">See the work <app-icon name="arrow-right" [size]="18" /></a>
+        <a class="btn" [href]="profile.resumeUrl" target="_blank" rel="noopener">Résumé (PDF) <app-icon name="download" [size]="18" /></a>
+      </div>
+    </div>
+
+    <!-- Showreel: plays SHOWREEL if set in portfolio.data.ts, otherwise cycles through project covers -->
+    <div class="reel" (mouseenter)="pauseReel(true)" (mouseleave)="pauseReel(false)" (focusin)="pauseReel(true)" (focusout)="pauseReel(false)">
+      <div class="reel-bar" aria-hidden="true">
+        <span class="rec"></span> REEL
+        <span class="tc">{{ showreel ? 'SHOWREEL' : '0' + (reelIndex() + 1) + ' / 0' + reel.length }}</span>
+      </div>
+      <div class="reel-screen">
+        @if (showreel) {
+          <app-media-frame [item]="showreel" title="Showreel" [eager]="true" />
+        } @else {
+          @for (p of reel; track p.id; let i = $index) {
+            <a class="reel-slide" [routerLink]="['/projects', p.id]" [class.on]="i === reelIndex()"
+               [style.--c]="p.color" [attr.tabindex]="i === reelIndex() ? null : -1" [attr.aria-hidden]="i === reelIndex() ? null : 'true'">
+              @if (coverOf(p); as c) {
+                <img class="reel-img" [src]="c.src" alt="" [attr.loading]="i === 0 ? 'eager' : 'lazy'" />
+              } @else {
+                <app-project-art [art]="p.art" />
+              }
+              <span class="reel-caption">
+                <span class="k">Now showing</span>
+                <span class="t display">{{ p.title }}</span>
+              </span>
+            </a>
+          }
+        }
+      </div>
+      @if (!showreel) {
+        <div class="reel-dots" role="group" aria-label="Choose project">
+          @for (p of reel; track p.id; let i = $index) {
+            <button type="button" [class.on]="i === reelIndex()" (click)="showReel(i)"
+                    [attr.aria-label]="'Show ' + p.title" [attr.aria-pressed]="i === reelIndex()"><span></span></button>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="container facts">
+    @for (f of facts; track f.label) {
+      <div class="fact"><span class="display">{{ f.value }}</span><span>{{ f.label }}</span></div>
+    }
+    <div class="fact where"><app-icon name="map-pin" [size]="16" /><span>Based in {{ profile.location }}</span></div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    @for (g of [0, 1]; track g) {
+      <div class="ticker-group">
+        @for (t of ticker; track t) { <span class="ticker-item">{{ t }}</span> }
+      </div>
+    }
+  </div>
+</div>
+
+<!-- ===================== WORK ===================== -->
+<section id="work" class="section work" aria-labelledby="work-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="label"><span class="num">01</span> Selected work</p>
+        <h2 id="work-title" class="display">Selected work</h2>
+      </div>
+      <p>Games first, then the web platforms. Open any project for the full case study, trailer and screenshots.</p>
+    </div>
+
+    @for (group of groups; track group.key) {
+      <div class="group">
+        <div class="group-head">
+          <h3 class="group-title">{{ group.title }}</h3>
+          <span class="group-count">{{ group.items.length < 10 ? '0' + group.items.length : group.items.length }}</span>
+        </div>
+        <ul class="cards" role="list">
+          @for (p of group.items; track p.id) {
+            <li class="card reveal" [style.--c]="p.color">
+              <div class="card-media">
+                @if (coverOf(p); as c) {
+                  <img [src]="c.src" alt="" [class.contain]="c.contain" loading="lazy" decoding="async" />
+                } @else {
+                  <div class="card-art"><app-project-art [art]="p.art" /></div>
+                }
+                @if (hasVideo(p)) {
+                  <span class="badge"><app-icon name="play" [size]="11" /> Trailer</span>
+                }
+              </div>
+              <div class="card-body">
+                <p class="kicker">{{ p.kicker }}</p>
+                <h4 class="display"><a [routerLink]="['/projects', p.id]">{{ p.title }}</a></h4>
+                <p class="card-line">{{ p.tagline }}</p>
+                <div class="card-foot">
+                  <ul class="tags" role="list">
+                    @for (s of p.stack.slice(0, 3); track s) { <li class="tag">{{ s }}</li> }
+                  </ul>
+                  <span class="card-cta" aria-hidden="true">Case study <app-icon name="arrow-right" [size]="16" /></span>
+                </div>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ===================== ITCH.IO ===================== -->
+<section class="itch" aria-labelledby="itch-title">
+  <div class="container itch-grid">
+    <div class="itch-copy reveal">
+      <p class="label"><span class="num">&#9654;</span> Play them yourself</p>
+      <h2 id="itch-title" class="display">Download &amp; play<br />on itch.io</h2>
+      <p>{{ itchNames }} are on my itch.io page. Download them and try them yourself.</p>
+      <a class="btn btn-primary" [href]="profile.itch.href" target="_blank" rel="noopener">
+        Open my itch.io page <app-icon name="arrow-up-right" [size]="18" />
+      </a>
+    </div>
+    <ul class="posters" role="list">
+      @for (g of itchGames; track g.id; let i = $index) {
+        <li [style.--i]="i">
+          <a [href]="profile.itch.href" target="_blank" rel="noopener" [attr.aria-label]="'Download ' + g.title + ' on itch.io'">
+            <img [src]="g.poster" [alt]="g.title + ' poster'" loading="lazy" decoding="async" />
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== EXPERIENCE ===================== -->
+<section id="experience" class="section section--alt" aria-labelledby="exp-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="label"><span class="num">02</span> Experience</p>
+        <h2 id="exp-title" class="display">Where I’ve worked</h2>
+      </div>
+      <p>Three internships: one at a game studio, two building web platforms.</p>
+    </div>
+
+    <ol class="jobs" role="list">
+      @for (job of experience; track job.company) {
+        <li class="job reveal">
+          <p class="period">{{ job.period }}</p>
+          <div class="job-main">
+            <h3><span class="company display">{{ job.company }}</span><span class="role">{{ job.role }}</span></h3>
+            <ul class="points" role="list">
+              @for (pt of job.points; track pt) { <li>{{ pt }}</li> }
+            </ul>
+          </div>
+          <div class="job-side">
+            <ul class="tags" role="list">
+              @for (t of job.tags; track t) { <li class="tag">{{ t }}</li> }
+            </ul>
+            @if (job.project) {
+              <a class="job-link" [routerLink]="['/projects', job.project]">See the game <app-icon name="arrow-right" [size]="16" /></a>
+            }
+          </div>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about" class="section about" aria-labelledby="about-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="label"><span class="num">03</span> About</p>
+        <h2 id="about-title" class="display">The toolkit</h2>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="statement reveal">
+        <p class="big">{{ profile.summary }}</p>
+        <h3 class="mini">Education</h3>
+        <ol class="edu" role="list">
+          @for (e of education; track e.title) {
+            <li>
+              <span class="period">{{ e.period }}</span>
+              <span class="what"><strong>{{ e.title }}</strong><span>{{ e.school }}@if (e.detail) {, {{ e.detail }}}</span></span>
+            </li>
+          }
+        </ol>
+      </div>
+
+      <dl class="skills reveal">
+        @for (g of skills; track g.title) {
+          <div class="skill-row">
+            <dt>{{ g.title }}</dt>
+            <dd>
+              @for (s of g.items; track s; let last = $last) { <span>{{ s }}@if (!last) {<span class="sr-only">,</span>}</span> }
+            </dd>
+          </div>
+        }
+      </dl>
+    </div>
+
+    <div class="credits reveal">
+      <div class="credit">
+        <h3 class="mini">Certificates</h3>
+        <ul role="list">
+          @for (c of certificates; track c.title) {
+            <li><strong>{{ c.title }}</strong><span>{{ c.issuer }}: {{ c.detail }}</span></li>
+          }
+        </ul>
+      </div>
+      <div class="credit">
+        <h3 class="mini">Languages</h3>
+        <ul role="list">
+          @for (l of languages; track l.name) { <li class="lang"><strong>{{ l.name }}</strong><span>{{ l.level }}</span></li> }
+        </ul>
+      </div>
+      <div class="credit">
+        <h3 class="mini">Beyond code</h3>
+        <ul role="list">
+          @for (x of leadership; track x.title) { <li><strong>{{ x.title }}</strong><span>{{ x.period }}. {{ x.detail }}</span></li> }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" class="section contact" aria-labelledby="contact-title">
+  <div class="container">
+    <p class="label"><span class="num">04</span> Contact</p>
+    <h2 id="contact-title" class="display contact-title">Let’s build<br /><span class="outline-text">something.</span></h2>
+    <p class="contact-lead">
+      I’m looking for {{ profile.seeking.long }}. If you’re building XR, games or full-stack products, I’d love to talk.
+    </p>
+
+    <div class="mail-row">
+      <a class="mail" [href]="'mailto:' + profile.email">{{ profile.email }}<app-icon name="arrow-up-right" [size]="28" /></a>
+      <button type="button" class="btn btn-sm" (click)="copyEmail()">
+        <app-icon [name]="copied() ? 'check' : 'copy'" [size]="16" />{{ copied() ? 'Copied' : 'Copy email' }}
+      </button>
+      <span class="sr-only" aria-live="polite">{{ copied() ? 'Email address copied to clipboard' : '' }}</span>
+    </div>
+
+    <ul class="socials" role="list">
+      <li><a [href]="profile.linkedin.href" target="_blank" rel="noopener"><span>LinkedIn</span><app-icon name="arrow-up-right" [size]="18" /></a></li>
+      <li><a [href]="profile.github.href" target="_blank" rel="noopener"><span>GitHub</span><app-icon name="arrow-up-right" [size]="18" /></a></li>
+      <li><a [href]="profile.itch.href" target="_blank" rel="noopener"><span>itch.io</span><app-icon name="arrow-up-right" [size]="18" /></a></li>
+      <li><a [href]="profile.resumeUrl" target="_blank" rel="noopener"><span>Résumé</span><app-icon name="download" [size]="18" /></a></li>
+    </ul>
+  </div>
+</section>

@@ -1,54 +1,220 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=VT323&display=swap');
-@import './app/app.css';
+/* ==========================================================================
+   Selim Salmi: portfolio design system, "cinematic studio"
+   Deep violet-black + electric purple, Anton display / Inter text / JetBrains Mono labels.
+   Media-first layout, film grain, WCAG-AA contrast, reduced motion respected.
+   ========================================================================== */
 
-* {
-	box-sizing: border-box;
+/* ---- Fonts (self-hosted, latin subset) -------------------------------- */
+@font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url('./assets/fonts/anton-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('./assets/fonts/inter-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('./assets/fonts/inter-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('./assets/fonts/inter-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('./assets/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('./assets/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
+/* Arcade page only: fetched only when used */
+@font-face { font-family: 'Press Start 2P'; font-style: normal; font-weight: 400; font-display: swap; src: url('./assets/fonts/press-start-2p-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'VT323'; font-style: normal; font-weight: 400; font-display: swap; src: url('./assets/fonts/vt323-latin-400-normal.woff2') format('woff2'); }
+
+/* ---- Tokens ------------------------------------------------------------ */
+:root {
+  color-scheme: dark;
+  --font-display: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --bg: #110f16;
+  --bg-2: #16131d;
+  --card: #1c1825;
+  --card-2: #241f2f;
+  --fg: #efeaf7;
+  --muted: #b0a8c0;
+  --subtle: #8f87a1;
+  --line: rgba(239, 234, 247, 0.1);
+  --line-strong: rgba(239, 234, 247, 0.22);
+
+  --accent: #a274ff;
+  --accent-hover: #b892ff;
+  --accent-ink: #13091f;
+  --accent-soft: rgba(162, 116, 255, 0.13);
+  --ring: rgba(184, 146, 255, 0.7);
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --gutter: clamp(16px, 4.5vw, 56px);
+  --max: 1360px;
+  --header-h: 72px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-html {
-	scroll-behavior: smooth;
-}
+/* ---- Base -------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 12px); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 body {
-	margin: 0;
-	font-family: 'Space Grotesk', system-ui, sans-serif;
-	background: #07090d;
-	color: #e6f0ff;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility;
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+/* film grain */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-img {
-	max-width: 100%;
-	display: block;
+h1, h2, h3, h4 { margin: 0; line-height: 1.1; font-weight: 600; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+img, svg, video { display: block; max-width: 100%; }
+a { color: inherit; text-underline-offset: 3px; }
+button { font: inherit; color: inherit; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; border-radius: 4px; }
+main:focus { outline: none; }
+
+.skip-link {
+  position: fixed; left: 16px; top: 12px; z-index: 200;
+  padding: 0.6rem 1rem; border-radius: var(--r-sm);
+  background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none;
+  transform: translateY(-160%); transition: transform 0.2s;
+}
+.skip-link:focus { transform: none; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
-button {
-	font-family: inherit;
+/* ---- Layout + type helpers ---------------------------------------------- */
+.container { width: min(var(--max), calc(100% - 2 * var(--gutter))); margin-inline: auto; }
+.section { padding-block: clamp(80px, 11vw, 160px); position: relative; }
+.section--alt { background: var(--bg-2); }
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 0.92;
+}
+.outline-text { color: transparent; -webkit-text-stroke: 1.5px var(--fg); }
+
+.label {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.label .num { color: var(--accent); }
+.label::before { content: ''; width: 28px; height: 1px; background: currentColor; opacity: 0.5; }
+.label.bare::before { display: none; }
+
+.section-head {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px 48px;
+  margin-bottom: clamp(40px, 6vw, 80px);
+}
+.section-head h2 { font-size: clamp(3rem, 1.4rem + 7vw, 7.5rem); margin-top: 1rem; }
+.section-head p { max-width: 38ch; color: var(--muted); }
+@media (max-width: 760px) { .section-head { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- Buttons + tags ----------------------------------------------------- */
+.btn {
+  --h: 52px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  min-height: var(--h); padding: 0 1.5rem;
+  border-radius: 999px; border: 1px solid var(--line-strong);
+  background: transparent; color: var(--fg);
+  font-weight: 600; font-size: 0.95rem; letter-spacing: 0.01em;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: background 0.25s var(--ease-out), color 0.25s, border-color 0.25s, transform 0.25s var(--ease-out);
+}
+.btn:hover { border-color: var(--fg); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn-sm { --h: 44px; padding: 0 1.1rem; font-size: 0.88rem; }
+.btn app-icon { transition: transform 0.25s var(--ease-out); }
+.btn:hover app-icon { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .btn:hover app-icon { transform: none; } }
+/* legacy names used by the arcade page */
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.ghost { background: transparent; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  display: inline-flex; align-items: center; min-height: 30px; padding: 0 0.75rem;
+  border: 1px solid var(--line-strong); border-radius: 999px;
+  font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.02em; color: var(--muted);
 }
 
-::selection {
-	background: rgba(88, 248, 192, 0.35);
-	color: #e6f0ff;
-	text-shadow: 0 0 10px rgba(88, 248, 192, 0.6);
+/* ---- Ticker / marquee ---------------------------------------------------- */
+.ticker {
+  overflow: hidden;
+  background: var(--accent); color: var(--accent-ink);
+}
+.ticker-track { display: flex; width: max-content; }
+.ticker-group { display: flex; align-items: center; flex-shrink: 0; }
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 1.6rem; padding: 0.95rem 0 0.95rem 1.6rem;
+  font-family: var(--font-display); font-size: clamp(1.3rem, 1rem + 1.2vw, 2rem);
+  text-transform: uppercase; letter-spacing: 0.02em; line-height: 1;
+}
+.ticker-item::after { content: '✦'; font-family: var(--font-sans); font-size: 0.7em; }
+@media (prefers-reduced-motion: no-preference) {
+  .ticker-track { animation: ticker 38s linear infinite; }
+  .ticker:hover .ticker-track { animation-play-state: paused; }
+}
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* ---- Motion -------------------------------------------------------------- */
+@keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes mask-up { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.progress { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .progress {
+      display: block; position: fixed; inset: 0 0 auto; height: 2px; z-index: 120;
+      background: var(--accent); transform-origin: 0 50%; transform: scaleX(0);
+      animation: grow-x linear both; animation-timeline: scroll(root);
+    }
+  }
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
 }
 
-/* Custom scrollbar – pixel arcade flavor */
-::-webkit-scrollbar {
-	width: 12px;
-	height: 12px;
+/* ---- Arcade page compatibility (keeps the original mini-games working) -- */
+.arcade-page {
+  --text: var(--fg);
+  --panel: var(--card);
+  --panel-2: var(--bg-2);
+  --accent-2: #fbbf24;
+  --accent-3: #38bdf8;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --chip: var(--accent-soft);
+  padding-top: calc(var(--header-h) + 32px);
+  width: min(1120px, calc(100% - 2 * var(--gutter)));
+  margin-inline: auto;
 }
-::-webkit-scrollbar-track {
-	background: #0a0f17;
-	border-left: 1px solid rgba(124, 201, 255, 0.08);
-}
-::-webkit-scrollbar-thumb {
-	background: linear-gradient(180deg, #58f8c0 0%, #7cc9ff 100%);
-	border: 2px solid #0a0f17;
-	border-radius: 0;
-	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4);
-}
-::-webkit-scrollbar-thumb:hover {
-	background: linear-gradient(180deg, #7cc9ff 0%, #ffb861 100%);
-}
+.arcade-page .section-tag { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.arcade-page .hero-grad { color: var(--accent); }
+.arcade-page .back-link { text-decoration: none; }

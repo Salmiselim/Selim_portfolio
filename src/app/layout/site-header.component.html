@@ -1,0 +1,46 @@
+<header class="bar" [class.solid]="scrolled() || open()">
+  <div class="inner">
+    <a class="brand" routerLink="/" fragment="top" aria-label="Selim Salmi, home">
+      <span class="brand-name">Selim Salmi</span>
+      <span class="brand-role">Full stack &amp; game dev</span>
+    </a>
+
+    <nav class="links" aria-label="Primary">
+      @for (item of nav; track item.id; let i = $index) {
+        <a routerLink="/" [fragment]="item.id" [class.active]="active() === item.id"
+           [attr.aria-current]="active() === item.id ? 'true' : null">
+          <span class="n">0{{ i + 1 }}</span>{{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="actions">
+      <a class="btn btn-primary btn-sm cv" [href]="profile.resumeUrl" target="_blank" rel="noopener">
+        Résumé <app-icon name="arrow-up-right" [size]="16" />
+      </a>
+      <button type="button" class="menu-btn" (click)="toggleMenu()"
+              [attr.aria-expanded]="open()" aria-controls="mobile-menu"
+              [attr.aria-label]="open() ? 'Close menu' : 'Open menu'">
+        <app-icon [name]="open() ? 'x' : 'menu'" [size]="22" />
+      </button>
+    </div>
+  </div>
+</header>
+
+@if (open()) {
+  <div id="mobile-menu" class="overlay">
+    <nav aria-label="Mobile">
+      @for (item of nav; track item.id; let i = $index) {
+        <a routerLink="/" [fragment]="item.id" (click)="open.set(false)" [style.--i]="i">
+          <span class="n">0{{ i + 1 }}</span><span class="t">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+    <div class="overlay-foot">
+      <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>
+      <a class="btn btn-primary" [href]="profile.resumeUrl" target="_blank" rel="noopener">
+        Download résumé <app-icon name="download" [size]="18" />
+      </a>
+    </div>
+  </div>
+}
