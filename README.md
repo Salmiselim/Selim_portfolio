@@ -62,3 +62,43 @@ Each click event also records `from` (hero, header, contact, footer, poster...).
 Exclude your own visits: open your live site once, press F12 → Console, run
 `localStorage.setItem('umami.disabled', 1)` (do it on each browser/phone you use).
 
+## Private statistics (/admin)
+
+Your own visitor statistics, stored in your own database and shown on a private page only your GitHub account can open.
+
+**How it works**
+- `src/app/core/analytics.service.ts` sends anonymous page views, time on page and clicks to `/api/collect`.
+- `api/` holds Vercel Functions (not part of the Angular bundle):
+  `collect.mjs` (stores events), `admin.mjs` (the dashboard), `auth/*` (GitHub sign-in).
+- No cookies for visitors, no IP addresses stored: a visitor is a daily-changing anonymous hash.
+  Bots, Vercel preview deployments and your own visits (while signed in) are not counted.
+- Everyone who is not you gets a plain **404**, on `/admin` *and* on the login page.
+
+**One-time setup on Vercel**
+1. **Database**: Vercel → your project → *Storage* → *Create Database* → **Neon (Postgres)**, free plan →
+   connect it to this project. This adds `DATABASE_URL` automatically. Tables are created on first use.
+2. **GitHub sign-in app**: github.com → *Settings* → *Developer settings* → *OAuth Apps* → *New OAuth App*
+   - Homepage URL: `https://YOUR-DOMAIN`
+   - Authorization callback URL: `https://YOUR-DOMAIN/api/auth/callback`
+   - Register, copy the **Client ID**, then *Generate a new client secret* and copy it.
+3. **Environment variables**: Vercel → *Settings* → *Environment Variables* (Production):
+
+   | Name | Value |
+   | --- | --- |
+   | `GITHUB_CLIENT_ID` | from step 2 |
+   | `GITHUB_CLIENT_SECRET` | from step 2 |
+   | `ADMIN_GITHUB_ID` | `90532119` (your GitHub account's permanent id) |
+   | `SESSION_SECRET` | a long random string (see below) |
+   | `ADMIN_LOGIN_KEY` | another long random string (see below) |
+
+   Generate each random string with: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+4. Commit + push (or *Redeploy* in Vercel so the new variables apply).
+
+**Signing in**
+- Open `https://YOUR-DOMAIN/api/auth/login?k=YOUR_ADMIN_LOGIN_KEY` → approve on GitHub → you land on `/admin`.
+  Bookmark that link and keep it private. The session lasts 7 days; *Sign out* is in the top bar.
+- If `/admin` ever shows the home page instead, use `https://YOUR-DOMAIN/api/admin`.
+- Sign in on the same domain you entered in the GitHub app (or set `PUBLIC_BASE_URL`, e.g. `https://selim-salmi.tn`).
+
+**Optional variables**: `STATS_TIMEZONE` (default `Africa/Tunis`), `STATS_RETENTION_DAYS` (default 730).
+

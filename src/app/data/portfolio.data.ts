@@ -45,13 +45,14 @@ export const PROFILE = {
  * or upload long videos to YouTube. Projects without media show their vector cover art instead.
  * ---------------------------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------------------------------
- * ANALYTICS: your private visitor statistics (Umami Cloud, free, cookie-free)
- * 1. Create a free account at https://cloud.umami.is and add your website.
- * 2. Copy its "Website ID" (a long id like 94db1cb1-74f4-...) and paste it below.
- * 3. Deploy. Your stats dashboard is https://cloud.umami.is, only reachable with your login.
- * Leave the id empty to turn analytics off completely (nothing is loaded).
+ * ANALYTICS: anonymous, cookie-free visitor statistics
+ * - collectUrl: your own stats system (Vercel Function + database), read on /admin.
+ *   Set it to '' to turn it off. Setup steps: README → "Private statistics".
+ * - umamiWebsiteId: optional Umami Cloud backup (https://cloud.umami.is). '' = off.
+ * Nothing is tracked on localhost.
  * ---------------------------------------------------------------------------------------------- */
 export const ANALYTICS = {
+  collectUrl: '/api/collect',
   umamiWebsiteId: 'db7d3b52-3086-4db0-b65f-5f6f29c2340f',
   scriptUrl: 'https://cloud.umami.is/script.js',
   /** Optional: only count visits on these exact hostnames (e.g. ['selim-salmi.tn']). Empty = any host except localhost. */
