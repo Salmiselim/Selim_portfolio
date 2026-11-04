@@ -21,7 +21,7 @@
 
       <div class="ctas">
         <a class="btn btn-primary" routerLink="/" fragment="work">See the work <app-icon name="arrow-right" [size]="18" /></a>
-        <a class="btn" [href]="profile.resumeUrl" target="_blank" rel="noopener">Résumé (PDF) <app-icon name="download" [size]="18" /></a>
+        <a class="btn" [href]="profile.resumeUrl" target="_blank" rel="noopener" data-umami-event="resume-download" data-umami-event-from="hero">Résumé (PDF) <app-icon name="download" [size]="18" /></a>
       </div>
     </div>
 
@@ -136,14 +136,15 @@
       <p class="label"><span class="num">&#9654;</span> Play them yourself</p>
       <h2 id="itch-title" class="display">Download &amp; play<br />on itch.io</h2>
       <p>{{ itchNames }} are on my itch.io page. Download them and try them yourself.</p>
-      <a class="btn btn-primary" [href]="profile.itch.href" target="_blank" rel="noopener">
+      <a class="btn btn-primary" [href]="profile.itch.href" target="_blank" rel="noopener" data-umami-event="itch-click" data-umami-event-from="itch-section">
         Open my itch.io page <app-icon name="arrow-up-right" [size]="18" />
       </a>
     </div>
     <ul class="posters" role="list">
       @for (g of itchGames; track g.id; let i = $index) {
         <li [style.--i]="i">
-          <a [href]="profile.itch.href" target="_blank" rel="noopener" [attr.aria-label]="'Download ' + g.title + ' on itch.io'">
+          <a [href]="profile.itch.href" target="_blank" rel="noopener" [attr.aria-label]="'Download ' + g.title + ' on itch.io'"
+             data-umami-event="itch-click" data-umami-event-from="poster" [attr.data-umami-event-game]="g.title">
             <img [src]="g.poster" [alt]="g.title + ' poster'" loading="lazy" decoding="async" />
           </a>
         </li>
@@ -258,7 +259,7 @@
     </p>
 
     <div class="mail-row">
-      <a class="mail" [href]="'mailto:' + profile.email">{{ profile.email }}<app-icon name="arrow-up-right" [size]="28" /></a>
+      <a class="mail" [href]="'mailto:' + profile.email" data-umami-event="email-click" data-umami-event-from="contact">{{ profile.email }}<app-icon name="arrow-up-right" [size]="28" /></a>
       <button type="button" class="btn btn-sm" (click)="copyEmail()">
         <app-icon [name]="copied() ? 'check' : 'copy'" [size]="16" />{{ copied() ? 'Copied' : 'Copy email' }}
       </button>
@@ -266,10 +267,10 @@
     </div>
 
     <ul class="socials" role="list">
-      <li><a [href]="profile.linkedin.href" target="_blank" rel="noopener"><span>LinkedIn</span><app-icon name="arrow-up-right" [size]="18" /></a></li>
-      <li><a [href]="profile.github.href" target="_blank" rel="noopener"><span>GitHub</span><app-icon name="arrow-up-right" [size]="18" /></a></li>
-      <li><a [href]="profile.itch.href" target="_blank" rel="noopener"><span>itch.io</span><app-icon name="arrow-up-right" [size]="18" /></a></li>
-      <li><a [href]="profile.resumeUrl" target="_blank" rel="noopener"><span>Résumé</span><app-icon name="download" [size]="18" /></a></li>
+      <li><a [href]="profile.linkedin.href" target="_blank" rel="noopener" data-umami-event="linkedin-click" data-umami-event-from="contact"><span>LinkedIn</span><app-icon name="arrow-up-right" [size]="18" /></a></li>
+      <li><a [href]="profile.github.href" target="_blank" rel="noopener" data-umami-event="github-click" data-umami-event-from="contact"><span>GitHub</span><app-icon name="arrow-up-right" [size]="18" /></a></li>
+      <li><a [href]="profile.itch.href" target="_blank" rel="noopener" data-umami-event="itch-click" data-umami-event-from="contact"><span>itch.io</span><app-icon name="arrow-up-right" [size]="18" /></a></li>
+      <li><a [href]="profile.resumeUrl" target="_blank" rel="noopener" data-umami-event="resume-download" data-umami-event-from="contact"><span>Résumé</span><app-icon name="download" [size]="18" /></a></li>
     </ul>
   </div>
 </section>

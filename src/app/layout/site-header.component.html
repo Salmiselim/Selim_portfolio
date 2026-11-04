@@ -15,7 +15,7 @@
     </nav>
 
     <div class="actions">
-      <a class="btn btn-primary btn-sm cv" [href]="profile.resumeUrl" target="_blank" rel="noopener">
+      <a class="btn btn-primary btn-sm cv" [href]="profile.resumeUrl" target="_blank" rel="noopener" data-umami-event="resume-download" data-umami-event-from="header">
         Résumé <app-icon name="arrow-up-right" [size]="16" />
       </a>
       <button type="button" class="menu-btn" (click)="toggleMenu()"
@@ -37,8 +37,8 @@
       }
     </nav>
     <div class="overlay-foot">
-      <a [href]="'mailto:' + profile.email">{{ profile.email }}</a>
-      <a class="btn btn-primary" [href]="profile.resumeUrl" target="_blank" rel="noopener">
+      <a [href]="'mailto:' + profile.email" data-umami-event="email-click" data-umami-event-from="mobile-menu">{{ profile.email }}</a>
+      <a class="btn btn-primary" [href]="profile.resumeUrl" target="_blank" rel="noopener" data-umami-event="resume-download" data-umami-event-from="mobile-menu">
         Download résumé <app-icon name="download" [size]="18" />
       </a>
     </div>

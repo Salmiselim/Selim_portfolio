@@ -8,6 +8,7 @@ import {
   type Project,
 } from '../data/portfolio.data';
 import { SeoService } from '../core/seo.service';
+import { AnalyticsService } from '../core/analytics.service';
 import { IconComponent } from '../shared/icon.component';
 import { MediaFrameComponent } from '../shared/media-frame.component';
 import { ProjectArtComponent } from '../shared/project-art.component';
@@ -61,6 +62,7 @@ export class HomeComponent {
   private reelPaused = false;
 
   protected readonly copied = signal(false);
+  private readonly analytics = inject(AnalyticsService);
 
   constructor() {
     inject(SeoService).update({ title: SITE.title, description: SITE.description, path: '/' });
@@ -98,6 +100,7 @@ export class HomeComponent {
   }
 
   protected async copyEmail(): Promise<void> {
+    this.analytics.track('email-copy');
     try {
       await navigator.clipboard.writeText(PROFILE.email);
       this.copied.set(true);

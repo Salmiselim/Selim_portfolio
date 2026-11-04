@@ -31,10 +31,10 @@ import { IconComponent } from '../shared/icon.component';
           @for (item of nav; track item.id) { <a routerLink="/" [fragment]="item.id">{{ item.label }}</a> }
         </nav>
         <div class="ext">
-          <a [href]="profile.linkedin.href" target="_blank" rel="noopener">LinkedIn <app-icon name="arrow-up-right" [size]="14" /></a>
-          <a [href]="profile.github.href" target="_blank" rel="noopener">GitHub <app-icon name="arrow-up-right" [size]="14" /></a>
-          <a [href]="profile.itch.href" target="_blank" rel="noopener">itch.io <app-icon name="arrow-up-right" [size]="14" /></a>
-          <a [href]="'mailto:' + profile.email">Email <app-icon name="arrow-up-right" [size]="14" /></a>
+          <a [href]="profile.linkedin.href" target="_blank" rel="noopener" data-umami-event="linkedin-click" data-umami-event-from="footer">LinkedIn <app-icon name="arrow-up-right" [size]="14" /></a>
+          <a [href]="profile.github.href" target="_blank" rel="noopener" data-umami-event="github-click" data-umami-event-from="footer">GitHub <app-icon name="arrow-up-right" [size]="14" /></a>
+          <a [href]="profile.itch.href" target="_blank" rel="noopener" data-umami-event="itch-click" data-umami-event-from="footer">itch.io <app-icon name="arrow-up-right" [size]="14" /></a>
+          <a [href]="'mailto:' + profile.email" data-umami-event="email-click" data-umami-event-from="footer">Email <app-icon name="arrow-up-right" [size]="14" /></a>
           <a class="arcade" routerLink="/arcade"><app-icon name="gamepad" [size]="16" /> Play Snake</a>
         </div>
       </div>
@@ -42,7 +42,7 @@ import { IconComponent } from '../shared/icon.component';
       <div class="legal">
         <div class="container row">
           <span>© {{ year }} {{ profile.name }}</span>
-          <span>Built with Angular · {{ profile.location }}</span>
+          <span>Cookie-free, anonymous analytics · Built with Angular</span>
         </div>
       </div>
     </footer>

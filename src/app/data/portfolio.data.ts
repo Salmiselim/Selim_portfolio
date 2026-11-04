@@ -44,6 +44,20 @@ export const PROFILE = {
  * Tips: export screenshots as .jpg or .webp at ~1920px wide, keep videos under ~25 MB (H.264 .mp4),
  * or upload long videos to YouTube. Projects without media show their vector cover art instead.
  * ---------------------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------
+ * ANALYTICS: your private visitor statistics (Umami Cloud, free, cookie-free)
+ * 1. Create a free account at https://cloud.umami.is and add your website.
+ * 2. Copy its "Website ID" (a long id like 94db1cb1-74f4-...) and paste it below.
+ * 3. Deploy. Your stats dashboard is https://cloud.umami.is, only reachable with your login.
+ * Leave the id empty to turn analytics off completely (nothing is loaded).
+ * ---------------------------------------------------------------------------------------------- */
+export const ANALYTICS = {
+  umamiWebsiteId: 'db7d3b52-3086-4db0-b65f-5f6f29c2340f',
+  scriptUrl: 'https://cloud.umami.is/script.js',
+  /** Optional: only count visits on these exact hostnames (e.g. ['selim-salmi.tn']). Empty = any host except localhost. */
+  domains: [] as string[],
+} as const;
+
 export type Media =
   | {
       readonly kind: 'image'; readonly src: string; readonly alt: string; readonly caption?: string;

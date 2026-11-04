@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, signal } f
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import type { Media } from '../data/portfolio.data';
 import { IconComponent } from './icon.component';
+import { AnalyticsService } from '../core/analytics.service';
 
 /**
  * Renders one media item: an image, a self-hosted video (mp4/webm) or a YouTube video.
@@ -35,13 +36,13 @@ import { IconComponent } from './icon.component';
       }
       @case ('video') {
         <video [src]="video()!.src" [attr.poster]="video()!.poster ?? null" controls playsinline preload="metadata"
-               [attr.aria-label]="title() + ' demo video'"></video>
+               [attr.aria-label]="title() + ' demo video'" (play)="onPlay()"></video>
       }
       @case ('youtube') {
         @if (playing()) {
           <iframe [src]="ytEmbed()" [title]="title() + ' video'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
         } @else {
-          <button type="button" class="yt" (click)="playing.set(true)" [attr.aria-label]="'Play ' + title() + ' video'">
+          <button type="button" class="yt" (click)="playing.set(true); onPlay()" [attr.aria-label]="'Play ' + title() + ' video'">
             <img [src]="ytThumb()" alt="" loading="lazy" />
             <span class="play"><app-icon name="play" [size]="30" /></span>
           </button>
@@ -56,6 +57,15 @@ export class MediaFrameComponent {
   readonly eager = input(false);
 
   protected readonly playing = signal(false);
+  private readonly analytics = inject(AnalyticsService);
+  private played = false;
+
+  /** Counts the first play of each video per page view. */
+  protected onPlay(): void {
+    if (this.played) return;
+    this.played = true;
+    this.analytics.track('video-play', { project: this.title() || 'unknown' });
+  }
   private readonly sanitizer = inject(DomSanitizer);
 
   protected readonly image = computed(() => { const m = this.item(); return m.kind === 'image' ? m : null; });

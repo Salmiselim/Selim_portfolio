@@ -1,8 +1,9 @@
 import {
-  ChangeDetectionStrategy, Component, ElementRef, computed, input, signal, viewChild,
+  ChangeDetectionStrategy, Component, ElementRef, computed, inject, input, signal, viewChild,
 } from '@angular/core';
 import type { Media, Project } from '../data/portfolio.data';
 import { IconComponent } from './icon.component';
+import { AnalyticsService } from '../core/analytics.service';
 import { MediaFrameComponent } from './media-frame.component';
 import { ProjectArtComponent } from './project-art.component';
 
@@ -97,7 +98,10 @@ export class MediaGalleryComponent {
   protected readonly current = signal(-1);
   protected readonly currentImage = computed(() => this.images()[this.current()] ?? null);
 
+  private readonly analytics = inject(AnalyticsService);
+
   protected open(m: Media): void {
+    this.analytics.track('screenshot-open', { project: this.project().title });
     this.current.set(this.images().indexOf(m as ImageMedia));
     this.dialog().nativeElement.showModal();
   }

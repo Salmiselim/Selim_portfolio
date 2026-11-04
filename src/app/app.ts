@@ -5,6 +5,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { SiteFooterComponent } from './layout/site-footer.component';
 import { SiteHeaderComponent } from './layout/site-header.component';
+import { AnalyticsService } from './core/analytics.service';
 
 @Component({
   selector: 'app-root',
@@ -24,9 +25,11 @@ export class AppComponent {
   private readonly doc = inject(DOCUMENT);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly analytics = inject(AnalyticsService);
 
   constructor() {
     afterNextRender(() => {
+      this.analytics.init();
       // After a route change (without an in-page anchor) move focus to the content for keyboard/screen-reader users.
       this.router.events
         .pipe(

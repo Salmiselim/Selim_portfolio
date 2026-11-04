@@ -42,3 +42,23 @@ Set `SHOWREEL` in the same file to play a showreel in the hero.
 Tips: screenshots as .jpg/.webp around 1920px wide; videos as H.264 .mp4 under ~25 MB, or upload to YouTube.
 
 `_old/` holds previous versions of the site for reference and can be deleted.
+
+## Private visitor statistics (Umami)
+
+The site sends anonymous, cookie-free stats to **Umami Cloud** (free plan). Your dashboard is
+https://cloud.umami.is, behind your own login. The portfolio has no admin page, so there is nothing for anyone else to open.
+
+Setup:
+1. Sign up at https://cloud.umami.is, then **Add website** (name + your domain).
+2. Copy the **Website ID** and paste it into `ANALYTICS.umamiWebsiteId` in `src/app/data/portfolio.data.ts`.
+3. Commit + push; Vercel deploys and stats start arriving. Nothing is tracked on localhost.
+
+What you will see: visitors, page views, countries/cities, devices/browsers, where people came from
+(LinkedIn, Google, GitHub...), which project pages they opened, live visitors, plus these events:
+`resume-download`, `itch-click` (with the game), `linkedin-click`, `github-click`, `email-click`,
+`email-copy`, `video-play` (with the project), `screenshot-open` (with the project).
+Each click event also records `from` (hero, header, contact, footer, poster...).
+
+Exclude your own visits: open your live site once, press F12 → Console, run
+`localStorage.setItem('umami.disabled', 1)` (do it on each browser/phone you use).
+
