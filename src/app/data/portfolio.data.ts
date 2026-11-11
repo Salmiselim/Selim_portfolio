@@ -133,7 +133,7 @@ export const SKILLS: readonly SkillGroup[] = [
   {
     title: 'Game development',
     icon: 'gamepad',
-    items: ['Unity (C#)', 'XR/VR development', 'Blender'],
+    items: ['Unity (C#)', 'Unreal Engine 5', 'XR/VR development', 'Blender'],
   },
 ];
 
@@ -223,6 +223,53 @@ export interface Project {
 
 /** Games first, then web platforms. Order here = order on the site. */
 export const PROJECTS: readonly Project[] = [
+  {
+    id: 'underhell',
+    title: 'Underhell',
+    category: 'game',
+    kicker: 'First-person horror · Unreal Engine 5',
+    tagline: 'They buried it beneath the city. Solve what the dead left behind, and get out before it finds you.',
+    summary:
+      'Underhell is a first-person psychological horror game I made with Aymen Ghozzi in Unreal Engine 5, for PC. You wake in the catacombs beneath a city with one thought: get out and get home to Elise. The dead who came before you left warnings in blood and notes in the dark. Read them, solve the rituals they describe, and keep moving, because something is still down here.',
+    platform: 'PC (Unreal Engine 5)',
+    year: '2026',
+    status: 'Demo build · coming soon',
+    stack: ['Unreal Engine 5', 'Level design', 'Lighting & post-processing', 'Narrative design'],
+    features: [
+      'Environmental puzzles told through the world: blood-written warnings such as “The dead count in scratches” and “Three were taken, return our heads” are the clues.',
+      'Ritual puzzles, including returning stolen skulls to a blood circle and carrying the last living flame to relight four dead braziers.',
+      'Inspectable notes and documents with zoom, read mode and take or dismiss actions.',
+      'Something still lives down here: a pale creature that stalks the halls the dead warned you about (“Do not open. It feeds beyond.”).',
+      'Story told through the protagonist’s subtitled inner voice as he fights to get home to Elise.',
+      'Hand-built catacombs, crypts, a sunken chapel and corridors lined with hooded stone sentinels.',
+    ],
+    highlights: [
+      'Moody, torch-lit lighting and cinematic post-processing: bloom, lens flares, film grain and chromatic aberration.',
+      'Custom main menu and in-game UI in a gothic serif style.',
+    ],
+    art: 'arena',
+    color: '#ef4444',
+    cover: '/media/underhell/cover.jpg',
+    poster: '/media/underhell/poster-art.jpg',
+    media: [
+      { kind: 'video', src: '/media/underhell/trailer.mp4', poster: '/media/underhell/poster.jpg', caption: 'Teaser trailer' },
+      { kind: 'image', src: '/media/underhell/cover.jpg', alt: 'Underhell main menu over a torch-lit catacomb corridor', caption: 'Main menu' },
+      { kind: 'image', src: '/media/underhell/im-coming-home.jpg', alt: 'A locked wooden door in a stone hall, subtitle: I need to get out. Elise, my dear, I’m coming home.', caption: '“Elise, my dear, I’m coming home.”' },
+      { kind: 'image', src: '/media/underhell/dead-count.jpg', alt: 'Blood-written message on a stone wall: The dead count in scratches, above tally marks', caption: 'The dead left warnings' },
+      { kind: 'image', src: '/media/underhell/return-our-heads.jpg', alt: 'Headless skeletons around a blood circle under the message: Three were taken, return our heads', caption: 'Puzzle: return the stolen heads' },
+      { kind: 'image', src: '/media/underhell/floating-skull.jpg', alt: 'A skull floating in a corridor lined with iron cages', caption: 'Carrying a skull back to the circle' },
+      { kind: 'image', src: '/media/underhell/note.jpg', alt: 'A note held up to the light: only one flame still burns down here, feed each mouth until all four are burning', caption: 'Reading the notes left behind', fit: 'contain' },
+      { kind: 'image', src: '/media/underhell/four-flames.jpg', alt: 'A wall torch beside the blood message: Feed the four flames', caption: 'Puzzle: feed the four flames' },
+      { kind: 'image', src: '/media/underhell/last-flame.jpg', alt: 'A glowing ember of flame drifting across a dark stone floor', caption: 'The last living flame' },
+      { kind: 'image', src: '/media/underhell/do-not-open.jpg', alt: 'Blood message beside a barred door: Do not open, it feeds beyond', caption: '“Do not open. It feeds beyond.”' },
+      { kind: 'image', src: '/media/underhell/the-creature.jpg', alt: 'A pale, hunched creature walking away down a stone corridor through an open door', caption: 'Something is still down here' },
+      { kind: 'image', src: '/media/underhell/crypt.jpg', alt: 'Vaulted crypt with robed statues, candles and a seated skeleton', caption: 'The crypt' },
+      { kind: 'image', src: '/media/underhell/chapel.jpg', alt: 'An underground chapel with wooden pews, crosses and a lit altar', caption: 'The sunken chapel' },
+      { kind: 'image', src: '/media/underhell/sentinel.jpg', alt: 'A hooded stone figure standing in a long vaulted corridor', caption: 'Hooded sentinel' },
+      { kind: 'image', src: '/media/underhell/statues.jpg', alt: 'Looking up at hooded stone statues leaning on staffs', caption: 'They watch you pass' },
+      { kind: 'image', src: '/media/underhell/poster-art.jpg', alt: 'Underhell poster: a barred wooden door with an eye in the keyhole, five levers below and the line: Pull them in the order the dead remember', caption: 'Key art', fit: 'contain' },
+    ],
+  },
   {
     id: 'meganopoly-xr',
     title: 'Meganopoly',
@@ -422,6 +469,6 @@ export const NAV = [
 
 /** Scrolling ticker under the hero. */
 export const TICKER = [
-  'Unity', 'C#', 'XR / VR', 'Meta Quest', 'Multiplayer', 'Spring Boot', 'Angular', 'Symfony',
+  'Unity', 'Unreal Engine 5', 'C#', 'XR / VR', 'Meta Quest', 'Multiplayer', 'Spring Boot', 'Angular', 'Symfony',
   'WebSockets', 'Blender', 'Java', 'MySQL',
 ] as const;

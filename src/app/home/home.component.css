@@ -190,11 +190,22 @@
 .posters img { width: 100%; aspect-ratio: 1414 / 2000; object-fit: cover; }
 .posters a:hover { border-color: var(--accent); transform: translateY(-8px); }
 .posters li:nth-child(2) a:hover { transform: translateY(-26px); }
-@media (prefers-reduced-motion: reduce) { .posters a, .posters a:hover, .posters li:nth-child(2) a, .posters li:nth-child(2) a:hover { transform: none; } }
+/* Four posters: one row of four, zig-zag stagger, and a wider poster column. */
+@media (min-width: 561px) {
+  .itch-grid:has(.posters > li:nth-child(4)) { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); }
+  .posters:has(> li:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .posters li:nth-child(4) a { transform: translateY(-18px); }
+  .posters li:nth-child(4) a:hover { transform: translateY(-26px); }
+}
+@media (max-width: 560px) {
+  .posters:has(> li:nth-child(4)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .posters:has(> li:nth-child(4)) li a { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .posters a, .posters a:hover, .posters li:nth-child(2) a, .posters li:nth-child(2) a:hover, .posters li:nth-child(4) a, .posters li:nth-child(4) a:hover { transform: none; } }
 
 @media (max-width: 900px) {
-  .itch-grid { grid-template-columns: minmax(0, 1fr); }
-  .posters li:nth-child(2) a { transform: none; }
+  .itch-grid, .itch-grid:has(.posters > li:nth-child(4)) { grid-template-columns: minmax(0, 1fr); }
+  .posters li:nth-child(2) a, .posters li:nth-child(4) a { transform: none; }
 }
 
 /* ===================== EXPERIENCE ===================== */
