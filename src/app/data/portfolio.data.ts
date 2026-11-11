@@ -249,7 +249,7 @@ export const PROJECTS: readonly Project[] = [
     ],
     art: 'arena',
     color: '#ef4444',
-    cover: '/media/underhell/cover.jpg',
+    cover: '/media/underhell/statues.jpg',
     poster: '/media/underhell/poster-art.jpg',
     media: [
       { kind: 'video', src: '/media/underhell/trailer.mp4', poster: '/media/underhell/poster.jpg', caption: 'Teaser trailer' },
